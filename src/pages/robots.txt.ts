@@ -21,7 +21,7 @@ const AI_CRAWLERS = [
 ];
 
 export const GET: APIRoute = ({ site }) => {
-  const base = site ?? new URL('https://usesybil.pro');
+  const base = site ?? new URL('https://www.usesybil.pro');
   const body = [
     'User-agent: *',
     'Allow: /',

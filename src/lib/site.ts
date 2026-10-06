@@ -4,7 +4,7 @@
  */
 export const SITE = {
   name: 'Use Sybil',
-  url: 'https://usesybil.pro',
+  url: 'https://www.usesybil.pro',
   appUrl: 'https://app.usesybil.pro',
   registerUrl: 'https://app.usesybil.pro/register',
   signInUrl: 'https://app.usesybil.pro/login',

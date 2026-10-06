@@ -55,7 +55,7 @@ Prices are written once in `src/lib/site.ts`. The pages, JSON-LD offers and
 ## SEO and GEO
 
 - Every page: unique `<title>` and meta description, canonical on
-  `https://usesybil.pro`, Open Graph and Twitter card (`public/og.png`,
+  `https://www.usesybil.pro`, Open Graph and Twitter card (`public/og.png`,
   1200×630), and one JSON-LD `@graph` (Organization, WebSite, WebPage).
   The home page adds SoftwareApplication (Pro € 39 and ManCo € 69 a month,
   excl. VAT, Belgium) and FAQPage. Sub-pages add BreadcrumbList.
@@ -79,8 +79,8 @@ Prices are written once in `src/lib/site.ts`. The pages, JSON-LD offers and
 
 ## Deploy
 
-Vercel project **`use-sybil-website`**, domain **`usesybil.pro`** (`www`
-redirects in Vercel's domain settings). Pushing to `main` deploys
+Vercel project **`use-sybil-website`**, domain **`www.usesybil.pro`** (the bare `usesybil.pro`
+redirects to `www` in Vercel's domain settings, so canonicals use `www`). Pushing to `main` deploys
 production. `vercel.json` sets clean URLs and the security headers (CSP
 `'self'` only, HSTS, `nosniff`, Referrer-Policy, Permissions-Policy,
 frame denial).

@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 const NOINDEX = ['/privacy', '/terms', '/404'];
 
 export default defineConfig({
-  site: 'https://usesybil.pro',
+  site: 'https://www.usesybil.pro',
   output: 'static',
   trailingSlash: 'never',
   build: {
