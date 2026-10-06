@@ -1,0 +1,35 @@
+---
+import LogoMark from './LogoMark.astro';
+import LangSwitch from './LangSwitch.astro';
+import { useCopy } from '../i18n';
+import { localePath, type LocaleCode } from '../i18n/config';
+
+interface Props {
+  lang: LocaleCode;
+}
+const { lang } = Astro.props;
+const t = useCopy(lang);
+const links = [
+  { href: localePath(lang, '/for-accountants'), label: t.footer.accountants },
+  { href: localePath(lang, '/security'), label: t.footer.security },
+  { href: localePath(lang, '/privacy'), label: t.footer.privacy },
+  { href: localePath(lang, '/terms'), label: t.footer.terms },
+];
+---
+<footer class="py-6 text-[13.5px] text-muted-foreground">
+  <div class="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+    <p class="m-0 flex min-h-11 items-center gap-2">
+      <LogoMark width={20} lines={false} />
+      <span>{t.footer.line}</span>
+    </p>
+    <nav aria-label={t.ui.footerNav}>
+      <ul class="m-0 flex list-none flex-wrap items-center gap-x-[18px] p-0">
+        {links.map((l) => (
+          <li><a href={l.href} class="inline-flex min-h-11 items-center text-muted-foreground underline-offset-2 hover:text-foreground">{l.label}</a></li>
+        ))}
+        <li class="inline-flex min-h-11 items-center">{t.footer.contact}</li>
+      </ul>
+    </nav>
+    <LangSwitch current={lang} class="flex md:hidden" />
+  </div>
+</footer>

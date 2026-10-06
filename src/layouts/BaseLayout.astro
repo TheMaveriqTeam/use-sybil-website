@@ -1,0 +1,125 @@
+---
+/**
+ * Every page goes through this layout. It writes the <head> that SEO and
+ * GEO rely on: title, description, canonical, hreflang (live languages only,
+ * x-default to English), Open Graph, Twitter card and one JSON-LD @graph.
+ */
+import '@fontsource/newsreader/400.css';
+import '@fontsource/newsreader/500.css';
+import '@fontsource/newsreader/400-italic.css';
+import '@fontsource/newsreader/500-italic.css';
+import '@fontsource/geist/400.css';
+import '@fontsource/geist/500.css';
+import '@fontsource/geist/600.css';
+import '@fontsource/geist-mono/400.css';
+import '../styles/global.css';
+import heroFont from '@fontsource/newsreader/files/newsreader-latin-400-normal.woff2?url';
+import bodyFont from '@fontsource/geist/files/geist-latin-400-normal.woff2?url';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { useCopy } from '../i18n';
+import { DEFAULT_LOCALE, LIVE_LOCALES, getLocale, localePath, type LocaleCode } from '../i18n/config';
+import { SITE } from '../lib/site';
+import { breadcrumbList, graph, organization, serialise, webPage, website } from '../lib/schema';
+
+interface Props {
+  lang?: LocaleCode;
+  title: string;
+  description: string;
+  /** Path without locale prefix, e.g. "/security". */
+  path: string;
+  noindex?: boolean;
+  /** Extra JSON-LD nodes for this page. */
+  schema?: object[];
+  /** Breadcrumb trail after Home, e.g. [{ name: 'Security', path: '/security' }]. */
+  breadcrumb?: { name: string; path: string }[];
+  pageType?: string;
+  /** Hide hreflang for pages that exist in one language only (404). */
+  alternates?: boolean;
+}
+
+const {
+  lang = DEFAULT_LOCALE,
+  title,
+  description,
+  path,
+  noindex = false,
+  schema = [],
+  breadcrumb,
+  pageType,
+  alternates = true,
+} = Astro.props;
+
+const t = useCopy(lang);
+const locale = getLocale(lang);
+const site = Astro.site ?? new URL(SITE.url);
+const urlFor = (code: LocaleCode, p: string) => new URL(localePath(code, p), site).href;
+const canonical = urlFor(lang, path);
+const ogImage = new URL(SITE.ogImage, site).href;
+
+const trail = breadcrumb
+  ? [{ name: t.ui.home, url: urlFor(lang, '/') }, ...breadcrumb.map((b) => ({ name: b.name, url: urlFor(lang, b.path) }))]
+  : undefined;
+
+const jsonLd = graph([
+  organization(),
+  website(locale.tag),
+  webPage({ url: canonical, title, description, lang: locale.tag, type: pageType, breadcrumb: !!trail }),
+  ...(trail ? [breadcrumbList(canonical, trail)] : []),
+  ...schema,
+]);
+---
+<!doctype html>
+<html lang={locale.tag} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {alternates && <link rel="canonical" href={canonical} />}
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    {alternates && !noindex && LIVE_LOCALES.map((l) => <link rel="alternate" hreflang={l.tag} href={urlFor(l.code, path)} />)}
+    {alternates && !noindex && <link rel="alternate" hreflang="x-default" href={urlFor(DEFAULT_LOCALE, path)} />}
+
+    <link rel="preload" href={heroFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FBF8F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F2219" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Use Sybil for language models" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale.ogLocale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={SITE.ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={SITE.ogImageAlt} />
+
+    <script is:inline type="application/ld+json" set:html={serialise(jsonLd)} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only z-50 rounded-md bg-primary px-4 py-3 text-primary-foreground focus:not-sr-only focus:absolute focus:top-2 focus:left-2">{t.ui.skip}</a>
+    <Header lang={lang} />
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

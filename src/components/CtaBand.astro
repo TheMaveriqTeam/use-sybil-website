@@ -1,0 +1,21 @@
+---
+import LogoMark from './LogoMark.astro';
+import { useCopy } from '../i18n';
+import type { LocaleCode } from '../i18n/config';
+import { SITE } from '../lib/site';
+
+interface Props {
+  lang: LocaleCode;
+}
+const { lang } = Astro.props;
+const c = useCopy(lang).home.closing;
+---
+<section class="band py-16 text-center" aria-labelledby="closing-title">
+  <div class="wrap flex flex-col items-center gap-4">
+    <LogoMark width={48} variant="reversed" />
+    <h2 id="closing-title" class="h2 !m-0 text-band-foreground">{c.title1} <em>{c.title2}</em></h2>
+    <p class="m-0 text-lg text-band-muted">{c.text}</p>
+    <a class="btn btn-inverse" href={SITE.registerUrl}>{c.cta}</a>
+    <p class="m-0 text-[13.5px] text-band-muted">{c.points.join(' · ')}</p>
+  </div>
+</section>

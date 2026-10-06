@@ -1,0 +1,34 @@
+---
+import { LOCALES, type LocaleCode } from '../i18n/config';
+import { useCopy } from '../i18n';
+
+interface Props {
+  current: LocaleCode;
+  class?: string;
+}
+const { current, class: className = '' } = Astro.props;
+const t = useCopy(current);
+---
+<div class:list={['items-center text-sm text-muted-foreground', className]} role="group" aria-label={t.ui.language}>
+  {LOCALES.map((l, i) => (
+    <>
+      {i > 0 && <span aria-hidden="true" class="px-1.5">·</span>}
+      {l.code === current ? (
+        <span aria-current="true" lang={l.tag} class="font-medium text-foreground">
+          <span aria-hidden="true">{l.label}</span>
+          <span class="sr-only">{l.name}</span>
+        </span>
+      ) : l.status === 'live' ? (
+        <a href={`/${l.code}`} lang={l.tag} hreflang={l.tag} class="inline-flex min-h-11 items-center text-muted-foreground no-underline hover:underline">
+          {l.label}
+        </a>
+      ) : (
+        <span aria-disabled="true" title={t.ui.languageSoon(l.name)} class="inline-flex items-baseline gap-1">
+          <span aria-hidden="true" lang={l.tag}>{l.label}</span>
+          <span aria-hidden="true" class="text-[11px]">{t.ui.soon}</span>
+          <span class="sr-only">{t.ui.languageSoon(l.name)}</span>
+        </span>
+      )}
+    </>
+  ))}
+</div>

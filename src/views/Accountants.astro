@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { useCopy } from '../i18n';
+import { localePath, type LocaleCode } from '../i18n/config';
+
+interface Props {
+  lang: LocaleCode;
+}
+const { lang } = Astro.props;
+const t = useCopy(lang);
+const a = t.accountants;
+---
+<BaseLayout
+  lang={lang}
+  title={t.meta.accountants.title}
+  description={t.meta.accountants.description}
+  path="/for-accountants"
+  breadcrumb={[{ name: t.footer.accountants, path: '/for-accountants' }]}
+>
+  <PageIntro lang={lang} eyebrow={a.eyebrow} title={a.title} lead={a.lead} crumb={t.footer.accountants} />
+
+  <section class="py-14 md:py-20" aria-labelledby="pack-title">
+    <div class="wrap">
+      <h2 id="pack-title" class="h2 !mt-0 mb-8">{a.packTitle}</h2>
+      <ol class="m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
+        {a.pack.map((item, i) => (
+          <li class="card flex flex-col gap-2">
+            <span class="step-label" aria-hidden="true">{i + 1}</span>
+            <h3 class="card-title">{item.title}</h3>
+            <p class="card-text">{item.text}</p>
+          </li>
+        ))}
+        <li class="card flex flex-col gap-2 !border-2 !border-primary">
+          <span class="step-label" aria-hidden="true">✓</span>
+          <h3 class="card-title">{a.professionalTitle}</h3>
+          <p class="card-text">{a.professionalText}</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-t border-border bg-card py-14 md:py-20">
+    <div class="wrap grid grid-cols-1 gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="m-0 font-serif text-[28px] leading-tight font-normal md:text-[32px]">{a.howTitle}</h2>
+        <ul class="mt-4 mb-0 list-none p-0">
+          {a.how.map((line) => <li class="tick"><span class="text-primary" aria-hidden="true">✓</span>{line}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="m-0 font-serif text-[28px] leading-tight font-normal md:text-[32px]">{a.deliveryTitle}</h2>
+        <p class="mt-4 mb-6 text-base leading-relaxed text-soft">{a.deliveryText}</p>
+        <a class="btn btn-ghost" href={`${localePath(lang, '/')}#how`}>{a.cta}</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</BaseLayout>

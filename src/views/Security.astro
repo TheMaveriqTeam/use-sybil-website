@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { useCopy } from '../i18n';
+import type { LocaleCode } from '../i18n/config';
+
+interface Props {
+  lang: LocaleCode;
+}
+const { lang } = Astro.props;
+const t = useCopy(lang);
+const s = t.security;
+---
+<BaseLayout
+  lang={lang}
+  title={t.meta.security.title}
+  description={t.meta.security.description}
+  path="/security"
+  breadcrumb={[{ name: t.ui.security, path: '/security' }]}
+>
+  <PageIntro lang={lang} eyebrow={s.eyebrow} title={s.title} lead={s.lead} crumb={t.ui.security} />
+  <section class="py-14 md:py-20" aria-label={s.eyebrow}>
+    <div class="wrap">
+      <ul class="m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
+        {s.sections.map((item) => (
+          <li class="card">
+            <h2 class="card-title">{item.title}</h2>
+            <p class="card-text">{item.text}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10 rounded-xl border border-border bg-sunken p-6">
+        <h2 class="m-0 text-[17px] font-semibold">{s.report.title}</h2>
+        <p class="mt-1.5 mb-0 text-[15.5px] text-soft">{s.report.text}</p>
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</BaseLayout>

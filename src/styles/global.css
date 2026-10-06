@@ -1,0 +1,527 @@
+@import 'tailwindcss';
+
+/*
+ * Use Sybil design tokens, direction "Private Office" (Forest & Saffron).
+ * Values mirror the app (Use-Sybil/src/index.css) and the brand book.
+ * Light is :root; dark follows the device (prefers-color-scheme) and is built
+ * from deep green, never black.
+ *
+ * Rules that the tokens encode:
+ * - Saffron (--highlight) is a fill, never text.
+ * - Red (--stop) is only for Stop: Sybil can't vouch for who you pay.
+ * - Leaf (--leaf) is for the wordmark and type of 24px or more only.
+ * - Only Sybil speaks on wash (--sybil).
+ */
+:root {
+  color-scheme: light dark;
+
+  --background: #fbf8f1; /* paper */
+  --foreground: #15211c; /* ink */
+  --card: #ffffff;
+  --sunken: #f4f0e6;
+  --soft: #33433b; /* body copy */
+  --muted-foreground: #45544c;
+  --primary: #1e4d3a; /* forest */
+  --primary-foreground: #ffffff;
+  --border: #dcd6c8;
+  --hairline: #eeeae0;
+  --sybil: #eaf1ec; /* wash: Sybil's voice */
+  --sybil-foreground: #1e4d3a;
+  --highlight: #d9a23a; /* saffron: fill only */
+  --highlight-foreground: #15211c;
+  --leaf: #3f8a63;
+  --wordmark: #1e4d3a;
+  --section-wash: #eaf1ec;
+  --drop-bg: #f4f8f5;
+  --drop-border: #9cc5ae;
+  --chip-strong: #15211c;
+  --chip-strong-foreground: #ffffff;
+
+  --due: #8f3d1e; /* terracotta: due soon */
+  --due-bg: #f7e6de;
+  --due-border: #e3a07f;
+  --due-mark-foreground: #ffffff;
+  --attention: #15211c;
+  --attention-bg: #fbf0d9;
+  --attention-border: #d9a23a;
+  --stop: #b42318; /* Stop only */
+  --stop-text: #b42318;
+  --stop-bg: #fdf1ef;
+  --stop-border: #e7b9b3;
+
+  --band: #1e4d3a;
+  --band-foreground: #fbf8f1;
+  --band-muted: #cfe3d6;
+  --band-eyebrow: #9cc5ae;
+  --band-border: #1e4d3a;
+
+  --placeholder-border: #8a958f;
+  --focus: #1e4d3a;
+  --shadow-pop: 0 10px 30px rgb(21 33 28 / 0.1);
+
+  /* Logo: sage front, forest reverse, paper lines, saffron nugget. */
+  --logo-front: #9cc5ae;
+  --logo-back: #1e4d3a;
+  --logo-line: #fbf8f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: hsl(152 39% 10%); /* #0F2219 */
+    --foreground: hsl(100 19% 94%);
+    --card: hsl(150 32% 12%);
+    --sunken: hsl(152 41% 7%);
+    --soft: hsl(140 12% 84%);
+    --muted-foreground: hsl(144 13% 72%);
+    --primary: hsl(146 26% 69%); /* sage */
+    --primary-foreground: hsl(152 39% 10%);
+    --border: hsl(148 24% 22%);
+    --hairline: hsl(150 26% 17%);
+    --sybil: hsl(152 35% 17%);
+    --sybil-foreground: hsl(141 26% 85%);
+    --leaf: #9cc5ae;
+    --wordmark: hsl(100 19% 94%);
+    --section-wash: hsl(152 41% 7%);
+    --drop-bg: hsl(152 30% 14%);
+    --drop-border: hsl(146 22% 42%);
+    --chip-strong: hsl(100 19% 94%);
+    --chip-strong-foreground: hsl(152 39% 10%);
+
+    --due: hsl(19 74% 78%);
+    --due-bg: hsl(16 40% 16%);
+    --due-border: hsl(16 45% 38%);
+    --due-mark-foreground: hsl(152 39% 10%);
+    --attention: hsl(40 77% 80%);
+    --attention-bg: hsl(41 49% 15%);
+    --stop: hsl(4 71% 45%);
+    --stop-text: hsl(5 85% 78%);
+    --stop-bg: hsl(4 42% 13%);
+    --stop-border: hsl(4 45% 38%);
+
+    --band: hsl(150 32% 12%);
+    --band-foreground: hsl(100 19% 94%);
+    --band-muted: hsl(144 13% 76%);
+    --band-eyebrow: #9cc5ae;
+    --band-border: hsl(148 24% 22%);
+
+    --placeholder-border: hsl(148 12% 50%);
+    --focus: #9cc5ae;
+    --shadow-pop: 0 10px 30px rgb(0 0 0 / 0.4);
+
+    --logo-front: #fbf8f1;
+    --logo-back: #9cc5ae;
+    --logo-line: #1e4d3a;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-sunken: var(--sunken);
+  --color-soft: var(--soft);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-hairline: var(--hairline);
+  --color-sybil: var(--sybil);
+  --color-sybil-foreground: var(--sybil-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-leaf: var(--leaf);
+  --color-wordmark: var(--wordmark);
+  --color-section-wash: var(--section-wash);
+  --color-drop: var(--drop-bg);
+  --color-drop-border: var(--drop-border);
+  --color-chip-strong: var(--chip-strong);
+  --color-chip-strong-foreground: var(--chip-strong-foreground);
+  --color-due: var(--due);
+  --color-due-bg: var(--due-bg);
+  --color-due-border: var(--due-border);
+  --color-attention: var(--attention);
+  --color-attention-bg: var(--attention-bg);
+  --color-attention-border: var(--attention-border);
+  --color-stop: var(--stop);
+  --color-stop-text: var(--stop-text);
+  --color-stop-bg: var(--stop-bg);
+  --color-stop-border: var(--stop-border);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
+  --color-band-muted: var(--band-muted);
+  --color-band-eyebrow: var(--band-eyebrow);
+  --color-band-border: var(--band-border);
+  --color-placeholder-border: var(--placeholder-border);
+
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --shadow-pop: var(--shadow-pop);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a {
+    color: var(--primary);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  [id] {
+    scroll-margin-top: 16px;
+  }
+  ::selection {
+    background: var(--sybil);
+    color: var(--foreground);
+  }
+}
+
+@layer components {
+  .wrap {
+    max-width: 1140px;
+    margin-inline: auto;
+    padding-inline: 16px;
+    box-sizing: border-box;
+  }
+  @media (min-width: 640px) {
+    .wrap {
+      padding-inline: 24px;
+    }
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .h2 {
+    margin: 10px 0 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--soft);
+  }
+
+  .btn {
+    font: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    padding: 14px 22px;
+    border: 1px solid var(--primary);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 50px;
+    box-sizing: border-box;
+    transition: background-color 150ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn:hover {
+    background: color-mix(in srgb, var(--primary) 88%, var(--foreground));
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--primary);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+  .btn-sm {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+  }
+  .card-title {
+    margin: 0 0 6px;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1.2;
+  }
+  .card-text {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--soft);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: var(--radius-sm);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    vertical-align: middle;
+    margin-left: 6px;
+    line-height: 1.5;
+  }
+
+  .tick {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .tick:last-child {
+    border-bottom: 0;
+  }
+
+  /* "Sound familiar?" speech bubbles, one per alert level. */
+  .bub {
+    position: relative;
+    border-radius: 16px;
+    padding: 15px 18px;
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 500;
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    border: 1.5px solid;
+  }
+  .bub::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 26px;
+    width: 16px;
+    height: 16px;
+    background: inherit;
+    border-right: inherit;
+    border-bottom: inherit;
+    transform: rotate(45deg);
+  }
+  .bub-mark {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .bub-attention {
+    background: var(--attention-bg);
+    border-color: var(--attention-border);
+    color: var(--foreground);
+  }
+  .bub-attention .bub-mark {
+    background: var(--highlight);
+    color: var(--highlight-foreground);
+  }
+  .bub-due {
+    background: var(--due-bg);
+    border-color: var(--due-border);
+    color: var(--foreground);
+  }
+  .bub-due .bub-mark {
+    background: var(--due);
+    color: var(--due-mark-foreground);
+  }
+  .bub-stop {
+    background: var(--stop-bg);
+    border-color: var(--stop-border);
+    color: var(--foreground);
+  }
+  .bub-stop .bub-mark {
+    background: var(--stop);
+    color: #ffffff;
+  }
+
+  .step-label {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--primary);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Chat: the visitor's message and Sybil's (only Sybil speaks on wash). */
+  .msg-me {
+    align-self: flex-end;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: 14px 14px 4px 14px;
+    padding: 9px 13px;
+    font-size: 14px;
+    max-width: 85%;
+    margin: 0;
+  }
+  .msg-sybil {
+    background: var(--sybil);
+    color: var(--foreground);
+    border-radius: 14px 14px 14px 4px;
+    padding: 10px 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .voice {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--sybil-foreground);
+  }
+
+  /* Dark sections (Trust, closing CTA). */
+  .band {
+    background: var(--band);
+    color: var(--band-foreground);
+    border-block: 1px solid var(--band-border);
+    --focus: var(--band-foreground);
+  }
+  .band .eyebrow {
+    color: var(--band-eyebrow);
+  }
+  .btn-inverse {
+    background: var(--band-foreground);
+    border-color: var(--band-foreground);
+    color: var(--band);
+  }
+  .btn-inverse:hover {
+    background: color-mix(in srgb, var(--band-foreground) 88%, var(--band));
+  }
+  @media (prefers-color-scheme: dark) {
+    .btn-inverse {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-foreground);
+    }
+  }
+
+  /* FAQ, built on <details>: no script. */
+  .faq details {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq summary {
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 12px 0;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary::after {
+    content: '+';
+    color: var(--primary);
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .faq details[open] summary::after {
+    content: '–';
+  }
+  .faq details p {
+    margin: 0 0 16px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--soft);
+  }
+
+  .placeholder {
+    border: 1px dashed var(--placeholder-border);
+    border-radius: 999px;
+    padding: 8px 14px;
+    color: var(--muted-foreground);
+  }
+
+  /* Long-form text on the sub-pages. */
+  .prose-sybil p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--soft);
+  }
+  .prose-sybil p + p {
+    margin-top: 12px;
+  }
+
+  .logo-front {
+    fill: var(--logo-front);
+  }
+  .logo-back {
+    fill: var(--logo-back);
+  }
+  .logo-line {
+    stroke: var(--logo-line);
+  }
+  .logo-reversed .logo-front {
+    fill: #fbf8f1;
+  }
+  .logo-reversed .logo-back {
+    fill: #9cc5ae;
+  }
+  .logo-reversed .logo-line {
+    stroke: #1e4d3a;
+  }
+}
+
+/* The portrait sits on its own warm paper (#FCF5ED); fade its edges into the
+   page so no rectangle shows. Dark mode keeps it as a rounded card. */
+@media (prefers-color-scheme: light) {
+  .portrait-fade img {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+      linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+      linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+    mask-composite: intersect;
+  }
+}

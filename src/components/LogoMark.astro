@@ -1,0 +1,37 @@
+---
+/**
+ * The Use Sybil mark (torn-receipt S), inline so it costs no request and
+ * follows light/dark mode. Geometry copied from src/assets/brand/use-sybil-mark.svg.
+ * variant "auto": sage front, forest reverse (light) / reversed colours (dark).
+ * variant "reversed": always the reversed mark, for forest backgrounds.
+ */
+interface Props {
+  width?: number;
+  variant?: 'auto' | 'reversed';
+  lines?: boolean;
+  class?: string;
+}
+const { width = 30, variant = 'auto', lines = true, class: className = '' } = Astro.props;
+const height = Math.round((width * 88) / 80);
+const S =
+  'M62.821 25.500 A20 20 0 1 0 60.821 48.356 A14 14 0 1 1 58.375 28.067 L60.816 30.583 L59.857 27.211 L62.298 29.728 L61.339 26.356 L63.780 28.872 Z';
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="10 6 80 88"
+  width={width}
+  height={height}
+  aria-hidden="true"
+  focusable="false"
+  class:list={[variant === 'reversed' && 'logo-reversed', className]}
+>
+  <path class="logo-front" d={S}></path>
+  <path class="logo-back" d={S} transform="rotate(180 50 50)"></path>
+  <path d="M62.434 46.141 A20 20 0 0 1 37.566 53.859 A20 20 0 0 1 62.434 46.141 Z" fill="#D9A23A"></path>
+  {lines && (
+    <>
+      <path class="logo-line" d="M53.162 20.217 A17.7 17.7 0 0 0 31.780 28.000" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+      <path class="logo-line" d="M50.841 22.358 A15.92 15.92 0 0 0 38.824 25.577" stroke-width="1.1" fill="none" stroke-linecap="round"></path>
+    </>
+  )}
+</svg>

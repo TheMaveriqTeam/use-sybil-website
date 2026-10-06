@@ -1,0 +1,43 @@
+---
+/** Privacy and Terms: clearly marked drafts, noindex, until the legal text exists. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { useCopy } from '../i18n';
+import type { LocaleCode } from '../i18n/config';
+
+interface Props {
+  lang: LocaleCode;
+  page: 'privacy' | 'terms';
+}
+const { lang, page } = Astro.props;
+const t = useCopy(lang);
+const l = t.legal;
+const doc = l[page];
+const meta = t.meta[page];
+const footnote = page === 'privacy' ? l.privacy.controller : l.terms.provider;
+---
+<BaseLayout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  path={`/${page}`}
+  noindex
+  breadcrumb={[{ name: doc.title, path: `/${page}` }]}
+>
+  <PageIntro lang={lang} eyebrow={doc.title} title={doc.title} crumb={doc.title} badge={l.draftBadge}>
+    <p class="mt-6 mb-0 rounded-lg border border-dashed border-placeholder-border bg-sunken px-4 py-3 text-[15px] font-medium" role="note">
+      {l.draftNote}
+    </p>
+  </PageIntro>
+  <section class="py-12 md:py-16">
+    <div class="wrap max-w-[800px]">
+      <div class="prose-sybil">
+        <p>{doc.intro}</p>
+      </div>
+      <ul class="mt-4 mb-0 list-none p-0">
+        {doc.points.map((pt) => <li class="tick"><span class="text-primary" aria-hidden="true">✓</span>{pt}</li>)}
+      </ul>
+      <p class="mt-8 mb-0 text-sm text-muted-foreground">{footnote}</p>
+    </div>
+  </section>
+</BaseLayout>

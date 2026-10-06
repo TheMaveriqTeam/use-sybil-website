@@ -1,0 +1,255 @@
+---
+/**
+ * The landing page, section by section as on the approved board
+ * ("Use Sybil · Website", Main.dc.html). All copy comes from src/i18n.
+ */
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import portrait from '../assets/brand/sybil-portrait.jpg';
+import { useCopy } from '../i18n';
+import { getLocale, localePath, type LocaleCode } from '../i18n/config';
+import { SITE } from '../lib/site';
+import { faqPage, softwareApplication } from '../lib/schema';
+
+interface Props {
+  lang: LocaleCode;
+}
+const { lang } = Astro.props;
+const t = useCopy(lang);
+const h = t.home;
+const tag = getLocale(lang).tag;
+const canonical = new URL(localePath(lang, '/'), Astro.site).href;
+
+const features = [
+  ...h.pricing.plans[0].features,
+  ...h.pricing.plans[1].features,
+];
+
+const schema = [
+  softwareApplication(tag, h.whatIs.body[0], features),
+  faqPage(canonical, h.faq.items),
+];
+const steps = h.how.steps;
+---
+<BaseLayout lang={lang} title={t.meta.home.title} description={t.meta.home.description} path="/" schema={schema}>
+  <!-- 1 · Promise -->
+  <section class="pt-10 pb-12 md:pt-[60px] md:pb-16" aria-labelledby="hero-title">
+    <div class="wrap flex flex-wrap items-center gap-11">
+      <div class="flex min-w-0 flex-[1_1_440px] flex-col gap-5">
+        <p class="eyebrow m-0">{h.hero.eyebrow}</p>
+        <h1 id="hero-title" class="m-0 font-serif text-[clamp(50px,6.6vw,88px)] leading-[0.98] font-normal">
+          {h.hero.line1}<br />
+          <em class="border-b-4 border-highlight font-medium text-primary">{h.hero.line2}</em>
+        </h1>
+        <p class="m-0 max-w-[520px] text-[19px] leading-[1.55] text-soft md:text-[20px]">{h.hero.lead}</p>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn" href={SITE.registerUrl}>{h.hero.primary}</a>
+          <a class="btn btn-ghost" href="#how">{h.hero.secondary}</a>
+        </div>
+        <ul class="m-0 flex list-none flex-wrap gap-4 p-0 text-sm text-muted-foreground">
+          {h.hero.points.map((p) => <li><span aria-hidden="true">✓ </span>{p}</li>)}
+        </ul>
+      </div>
+      <div class="portrait-fade relative min-w-0 flex-[1_1_400px]">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[360, 480, 720, 960]}
+          sizes="(min-width: 1024px) 480px, (min-width: 640px) 60vw, 90vw"
+          alt={h.hero.portraitAlt}
+          loading="eager"
+          fetchpriority="high"
+          class="ml-auto block h-auto w-full max-w-[480px] rounded-xl"
+        />
+        <div class="absolute top-[30px] left-0 w-[min(250px,62%)] rounded-xl border-[1.5px] border-stop bg-card px-[13px] py-[11px] text-[13.5px] leading-[1.45] shadow-pop" role="note">
+          <strong class="text-[11.5px] tracking-[0.06em] text-stop-text uppercase">{h.hero.stopLabel}</strong><br />
+          {h.hero.stopText}
+        </div>
+        <div class="absolute right-0 bottom-4 w-[min(260px,66%)] rounded-xl border border-border bg-card px-[13px] py-[11px] text-[13.5px] leading-[1.45] shadow-pop" role="note">
+          <span class="rounded-sm bg-highlight px-[7px] py-0.5 text-[11px] font-semibold text-highlight-foreground">{h.hero.foundLabel}</span>
+          <span class="mt-1.5 block">{h.hero.foundText}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is Use Sybil? A plain, quotable definition (GEO). -->
+  <section class="border-t border-border" aria-labelledby="what-is">
+    <div class="wrap py-8 md:py-10">
+      <div class="mx-auto max-w-[860px] md:grid md:grid-cols-[200px_1fr] md:gap-8">
+        <h2 id="what-is" class="m-0 mb-3 font-serif text-[22px] leading-tight font-normal md:mb-0">{h.whatIs.title}</h2>
+        <div class="prose-sybil">
+          {h.whatIs.body.map((p) => <p class="!text-[15.5px]">{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Recognition -->
+  <section class="border-y border-border bg-card py-14 md:py-[72px]" aria-labelledby="pains-title">
+    <div class="wrap">
+      <div class="mx-auto mb-[34px] max-w-[720px] text-center">
+        <p class="eyebrow m-0">{h.pains.eyebrow}</p>
+        <h2 id="pains-title" class="h2">{h.pains.title}</h2>
+      </div>
+      <ul class="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-[30px] p-0 md:grid-cols-2 lg:grid-cols-3">
+        {h.pains.items.map((p) => (
+          <li class:list={['bub', `bub-${p.tone}`]}>
+            <span class="bub-mark" aria-hidden="true">{p.mark}</span>
+            <span>{p.text}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mx-auto mt-11 mb-0 max-w-[700px] text-center font-serif text-[22px] leading-snug md:text-[26px]">{h.pains.resolve}</p>
+    </div>
+  </section>
+
+  <!-- 3 · How it works -->
+  <section id="how" class="py-16 md:py-20" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="mx-auto mb-10 max-w-[720px] text-center">
+        <p class="eyebrow m-0">{h.how.eyebrow}</p>
+        <h2 id="how-title" class="h2">{h.how.title}</h2>
+      </div>
+      <ol class="m-0 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
+        <li class="card flex flex-col gap-3">
+          <span class="step-label">{steps.you.label}</span>
+          <h3 class="card-title">{steps.you.title}</h3>
+          <p class="card-text">{steps.you.text}</p>
+          <div class="mt-auto rounded-lg border-[1.5px] border-dashed border-drop-border bg-drop p-[18px] text-center text-[13.5px] font-medium text-primary" aria-hidden="true">
+            {steps.you.demo}
+          </div>
+        </li>
+        <li class="card flex flex-col gap-3">
+          <span class="step-label">{steps.sybil.label}</span>
+          <h3 class="card-title">{steps.sybil.title}</h3>
+          <p class="card-text">{steps.sybil.text}</p>
+          <div class="mt-auto flex flex-col gap-1.5 rounded-lg bg-sunken p-3 text-[12.5px]" aria-hidden="true">
+            <div class="flex justify-between rounded-md bg-card px-2 py-1.5">
+              <span>{steps.sybil.demoSupplier}</span><b class="font-semibold">{steps.sybil.demoAmount}</b>
+            </div>
+            <div class="flex flex-wrap gap-[5px]">
+              <span class="rounded-sm bg-card px-1.5 py-0.5">{steps.sybil.demoTags[0]}</span>
+              <span class="rounded-sm bg-sybil px-1.5 py-0.5 text-sybil-foreground">{steps.sybil.demoTags[1]}</span>
+              <span class="rounded-sm bg-chip-strong px-1.5 py-0.5 text-chip-strong-foreground">{steps.sybil.demoTags[2]}</span>
+            </div>
+          </div>
+        </li>
+        <li class="card flex flex-col gap-3 !border-2 !border-primary">
+          <span class="step-label">{steps.together.label}</span>
+          <h3 class="card-title">{steps.together.title}</h3>
+          <p class="card-text">{steps.together.text}</p>
+          <div class="mt-auto flex flex-col gap-2" role="group" aria-label={steps.together.chatLabel}>
+            <p class="msg-sybil"><i class="voice">{steps.together.noticedLabel}</i> · {steps.together.noticed}</p>
+            <p class="msg-me">{steps.together.question}</p>
+            <p class="msg-sybil"><b class="font-semibold">{steps.together.answerAmount}</b>{steps.together.answer}</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 · Outcomes -->
+  <section class="bg-section-wash py-16 md:py-20" aria-labelledby="outcomes-title">
+    <div class="wrap">
+      <div class="mx-auto mb-10 max-w-[720px] text-center">
+        <p class="eyebrow m-0">{h.outcomes.eyebrow}</p>
+        <h2 id="outcomes-title" class="h2">{h.outcomes.title}</h2>
+      </div>
+      <ul class="m-0 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {h.outcomes.items.map((o) => (
+          <li class:list={['card', o.stop && '!border-stop-border']}>
+            <h3 class="card-title">
+              {o.title}
+              {o.manco && <span class="tag"><span aria-hidden="true">{h.outcomes.manco}</span><span class="sr-only">({h.outcomes.mancoLabel})</span></span>}
+            </h3>
+            <p class="card-text">{o.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 · Trust -->
+  <section id="trust" class="band py-14 md:py-[72px]" aria-labelledby="trust-title">
+    <div class="wrap">
+      <div class="mx-auto mb-9 max-w-[720px] text-center">
+        <p class="eyebrow m-0">{h.trust.eyebrow}</p>
+        <h2 id="trust-title" class="h2 text-band-foreground">{h.trust.title}</h2>
+      </div>
+      <ul class="m-0 grid list-none grid-cols-1 gap-7 p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {h.trust.items.map((item) => (
+          <li>
+            <h3 class="m-0 text-[17px] font-semibold">{item.title}</h3>
+            <p class="mt-1.5 mb-0 text-[15px] leading-[1.55] text-band-muted">{item.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-9 mb-0 text-center text-[15px]">
+        <a href={localePath(lang, '/security')} class="inline-flex min-h-11 items-center text-band-foreground underline underline-offset-4">{h.trust.more}</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 6 · Pricing -->
+  <section id="pricing" class="py-16 md:py-20" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="mx-auto mb-10 max-w-[720px] text-center">
+        <p class="eyebrow m-0">{h.pricing.eyebrow}</p>
+        <h2 id="pricing-title" class="h2">{h.pricing.title}</h2>
+        <p class="lead mx-auto mt-3.5 mb-0 max-w-[620px]">{h.pricing.lead}</p>
+      </div>
+      <div class="mx-auto grid max-w-[900px] grid-cols-1 gap-x-5 gap-y-8 md:grid-cols-2">
+        {h.pricing.plans.map((plan) => (
+          <article class:list={['card relative flex flex-col gap-2.5', plan.featured && '!border-2 !border-primary']} aria-labelledby={`plan-${plan.id}`}>
+            {plan.badge && (
+              <p class="absolute -top-3 left-[22px] m-0 rounded-sm bg-highlight px-[9px] py-[3px] text-xs font-semibold text-highlight-foreground">{plan.badge}</p>
+            )}
+            <h3 id={`plan-${plan.id}`} class="card-title">{plan.name}</h3>
+            <p class="m-0 text-[14.5px] text-muted-foreground">{plan.audience}</p>
+            <p class="m-0">
+              <span class="font-serif text-[46px] leading-tight">{plan.price}</span>
+              <span class="text-muted-foreground">{t.ui.perMonth}</span>
+            </p>
+            <ul class="m-0 list-none p-0">
+              {plan.features.map((f) => (
+                <li class="tick"><span class="text-primary" aria-hidden="true">✓</span>{f}</li>
+              ))}
+            </ul>
+            <a class:list={['btn mt-auto', !plan.featured && 'btn-ghost']} href={SITE.registerUrl}>{plan.cta}</a>
+          </article>
+        ))}
+      </div>
+      <p class="mt-[18px] mb-0 text-center text-sm text-muted-foreground">{h.pricing.extra}</p>
+      <div class="mt-[34px] text-center">
+        <p class="sr-only">{h.pricing.quotesLabel}</p>
+        <ul class="m-0 flex list-none flex-wrap items-center justify-center gap-3 p-0 text-sm">
+          {h.pricing.quotes.map((q) => <li class="placeholder">{q}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · FAQ -->
+  <section id="faq" class="border-t border-border bg-card py-14 md:py-[72px]" aria-labelledby="faq-title">
+    <div class="wrap flex flex-wrap items-start gap-x-14 gap-y-8">
+      <div class="flex min-w-0 flex-[1_1_300px] flex-col gap-4">
+        <p class="eyebrow m-0">{h.faq.eyebrow}</p>
+        <h2 id="faq-title" class="h2 !m-0">{h.faq.title}</h2>
+        <p class="m-0 text-base leading-relaxed text-soft">{h.faq.lead}</p>
+        <a class="btn self-start" href={SITE.registerUrl}>{t.ui.tryFree}</a>
+      </div>
+      <div class="faq min-w-0 flex-[2_1_520px]">
+        {h.faq.items.map((item, i) => (
+          <details open={i === 0}>
+            <summary><h3 class="m-0 text-[17px] font-medium">{item.q}</h3></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand lang={lang} />
+</BaseLayout>
