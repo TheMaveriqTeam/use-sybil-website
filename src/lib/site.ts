@@ -25,8 +25,8 @@ export const PLACEHOLDER = {
   vatNumber: 'BE [VAT number]',
   contactEmail: '[contact e-mail]',
   securityEmail: '[security contact e-mail]',
-  customerQuote: '[Pilot customer quote · Name, Company]',
-  accountantQuote: '[Accountant endorsement · Name, Office]',
+  customerQuote: { text: '[Pilot customer quote]', who: '[Name, Company]', placeholder: true },
+  accountantQuote: { text: '[Accountant endorsement]', who: '[Name, Office]', placeholder: true },
 } as const;
 
 export const PLANS = {

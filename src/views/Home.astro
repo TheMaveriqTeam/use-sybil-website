@@ -93,10 +93,10 @@ const steps = h.how.steps;
         <p class="eyebrow m-0">{h.pains.eyebrow}</p>
         <h2 id="pains-title" class="h2">{h.pains.title}</h2>
       </div>
-      <ul class="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-[30px] p-0 md:grid-cols-2 lg:grid-cols-3">
+      <ul class="notes mx-auto max-w-[1100px]">
         {h.pains.items.map((p) => (
-          <li class:list={['bub', `bub-${p.tone}`]}>
-            <span class="bub-mark" aria-hidden="true">{p.mark}</span>
+          <li class:list={['note', `note-${p.tone}`]}>
+            <span class="note-mark" aria-hidden="true">{p.mark}</span>
             <span>{p.text}</span>
           </li>
         ))}
@@ -224,8 +224,15 @@ const steps = h.how.steps;
       <p class="mt-[18px] mb-0 text-center text-sm text-muted-foreground">{h.pricing.extra}</p>
       <div class="mt-[34px] text-center">
         <p class="sr-only">{h.pricing.quotesLabel}</p>
-        <ul class="m-0 flex list-none flex-wrap items-center justify-center gap-3 p-0 text-sm">
-          {h.pricing.quotes.map((q) => <li class="placeholder">{q}</li>)}
+        <ul class="notes">
+          {h.pricing.quotes.map((q, i) => (
+            <li class="contents">
+              <figure class:list={['note hquote note-sybil text-left', q.placeholder && 'is-placeholder']} style={`--tilt:${i % 2 ? '1.2deg' : '-1.4deg'}`}>
+                <blockquote>{q.text}</blockquote>
+                <figcaption>{q.who}</figcaption>
+              </figure>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

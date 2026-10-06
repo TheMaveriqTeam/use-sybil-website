@@ -3,8 +3,8 @@
 /*
  * Use Sybil design tokens, direction "Private Office" (Forest & Saffron).
  * Values mirror the app (Use-Sybil/src/index.css) and the brand book.
- * Light is :root; dark follows the device (prefers-color-scheme) and is built
- * from deep green, never black.
+ * Light only: the website keeps the paper look whatever the visitor's device
+ * prefers (founder decision, 6 Oct 2026). The app has its own dark theme.
  *
  * Rules that the tokens encode:
  * - Saffron (--highlight) is a fill, never text.
@@ -13,7 +13,7 @@
  * - Only Sybil speaks on wash (--sybil).
  */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   --background: #fbf8f1; /* paper */
   --foreground: #15211c; /* ink */
@@ -63,55 +63,6 @@
   --logo-front: #9cc5ae;
   --logo-back: #1e4d3a;
   --logo-line: #fbf8f1;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: hsl(152 39% 10%); /* #0F2219 */
-    --foreground: hsl(100 19% 94%);
-    --card: hsl(150 32% 12%);
-    --sunken: hsl(152 41% 7%);
-    --soft: hsl(140 12% 84%);
-    --muted-foreground: hsl(144 13% 72%);
-    --primary: hsl(146 26% 69%); /* sage */
-    --primary-foreground: hsl(152 39% 10%);
-    --border: hsl(148 24% 22%);
-    --hairline: hsl(150 26% 17%);
-    --sybil: hsl(152 35% 17%);
-    --sybil-foreground: hsl(141 26% 85%);
-    --leaf: #9cc5ae;
-    --wordmark: hsl(100 19% 94%);
-    --section-wash: hsl(152 41% 7%);
-    --drop-bg: hsl(152 30% 14%);
-    --drop-border: hsl(146 22% 42%);
-    --chip-strong: hsl(100 19% 94%);
-    --chip-strong-foreground: hsl(152 39% 10%);
-
-    --due: hsl(19 74% 78%);
-    --due-bg: hsl(16 40% 16%);
-    --due-border: hsl(16 45% 38%);
-    --due-mark-foreground: hsl(152 39% 10%);
-    --attention: hsl(40 77% 80%);
-    --attention-bg: hsl(41 49% 15%);
-    --stop: hsl(4 71% 45%);
-    --stop-text: hsl(5 85% 78%);
-    --stop-bg: hsl(4 42% 13%);
-    --stop-border: hsl(4 45% 38%);
-
-    --band: hsl(150 32% 12%);
-    --band-foreground: hsl(100 19% 94%);
-    --band-muted: hsl(144 13% 76%);
-    --band-eyebrow: #9cc5ae;
-    --band-border: hsl(148 24% 22%);
-
-    --placeholder-border: hsl(148 12% 50%);
-    --focus: #9cc5ae;
-    --shadow-pop: 0 10px 30px rgb(0 0 0 / 0.4);
-
-    --logo-front: #fbf8f1;
-    --logo-back: #9cc5ae;
-    --logo-line: #1e4d3a;
-  }
 }
 
 @theme inline {
@@ -316,67 +267,125 @@
   }
 
   /* "Sound familiar?" speech bubbles, one per alert level. */
-  .bub {
-    position: relative;
-    border-radius: 16px;
-    padding: 15px 18px;
-    font-size: 17px;
-    line-height: 1.4;
-    font-weight: 500;
+  /* Hand-drawn notes ("Sound familiar?", quotes). The outline is an SVG
+     mask filled with the tone colour, so every tone reuses one drawing and
+     follows the tokens. Text in Newsreader italic, like a handwritten aside. */
+  .notes {
     display: flex;
-    gap: 11px;
-    align-items: center;
-    border: 1.5px solid;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 26px 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .bub::after {
+  .note {
+    --tone: var(--primary);
+    --note-bg: var(--card);
+    position: relative;
+    max-width: 360px;
+    padding: 22px 24px 20px 26px;
+    background: var(--note-bg);
+    border-radius: 14px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.35;
+    color: var(--foreground);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transform: rotate(var(--tilt, 0deg)) translateY(var(--lift, 0px));
+    transition: transform 0.25s ease;
+  }
+  .note::before {
     content: '';
     position: absolute;
-    bottom: -9px;
-    left: 26px;
-    width: 16px;
-    height: 16px;
-    background: inherit;
-    border-right: inherit;
-    border-bottom: inherit;
-    transform: rotate(45deg);
+    inset: -4px;
+    background: var(--tone);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath vector-effect='non-scaling-stroke' stroke-width='1.8' d='M14 9 C70 4 150 8 228 5 S352 4 386 10 C394 32 391 66 395 104 C330 114 238 110 160 113 S48 114 9 109 C4 82 7 44 6 22 C7 13 9 10 18 8'/%3E%3Cpath vector-effect='non-scaling-stroke' stroke-width='1.1' opacity='.55' d='M22 12 C110 8 230 11 380 13 M390 22 C392 52 389 80 391 100'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath vector-effect='non-scaling-stroke' stroke-width='1.8' d='M14 9 C70 4 150 8 228 5 S352 4 386 10 C394 32 391 66 395 104 C330 114 238 110 160 113 S48 114 9 109 C4 82 7 44 6 22 C7 13 9 10 18 8'/%3E%3Cpath vector-effect='non-scaling-stroke' stroke-width='1.1' opacity='.55' d='M22 12 C110 8 230 11 380 13 M390 22 C392 52 389 80 391 100'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    pointer-events: none;
   }
-  .bub-mark {
+  .note:hover {
+    transform: rotate(0deg) translateY(var(--lift, 0px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .note { transition: none; }
+  }
+  .note-mark {
+    position: relative;
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-    border-radius: 7px;
+    width: 30px;
+    height: 30px;
+    margin-top: 1px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-sans);
+    font-style: normal;
     font-weight: 700;
+    font-size: 15px;
+    color: var(--tone);
+  }
+  .note-mark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--tone);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' d='M30 7 C22 2 9 4 5 15 C1 27 10 37 21 36 C33 35 38 25 35 15 C33 9 27 5 19 6'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' d='M30 7 C22 2 9 4 5 15 C1 27 10 37 21 36 C33 35 38 25 35 15 C33 9 27 5 19 6'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  .note-due { --tone: var(--due); --note-bg: color-mix(in srgb, var(--due-bg) 55%, var(--card)); }
+  .note-attention { --tone: #a8741a; --note-bg: color-mix(in srgb, var(--attention-bg) 60%, var(--card)); }
+  .note-stop { --tone: var(--stop); --note-bg: color-mix(in srgb, var(--stop-bg) 60%, var(--card)); }
+  .note-sybil { --tone: var(--leaf); --note-bg: color-mix(in srgb, var(--sybil) 70%, var(--card)); }
+  /* A loose, pinned-up feel instead of a strict grid. */
+  .notes > .note:nth-child(6n + 1) { --tilt: -1.6deg; --lift: 8px; --w: 300px; margin-left: -18px; }
+  .notes > .note:nth-child(6n + 2) { --tilt: 1.1deg; --lift: -10px; --w: 340px; }
+  .notes > .note:nth-child(6n + 3) { --tilt: -0.6deg; --lift: 14px; --w: 285px; margin-right: -12px; }
+  .notes > .note:nth-child(6n + 4) { --tilt: 1.8deg; --lift: -4px; --w: 330px; margin-left: 24px; }
+  .notes > .note:nth-child(6n + 5) { --tilt: -1.1deg; --lift: 12px; --w: 310px; }
+  .notes > .note:nth-child(6n + 6) { --tilt: 0.7deg; --lift: -6px; --w: 290px; margin-right: 20px; }
+  @media (min-width: 640px) {
+    .notes > .note { width: var(--w, 320px); flex: 0 0 auto; }
+  }
+  @media (max-width: 639px) {
+    .notes { flex-direction: column; align-items: stretch; gap: 18px; }
+    .note { max-width: 88%; font-size: 19px; margin-left: 0 !important; margin-right: 0 !important; }
+    .notes > .note:nth-child(even) { align-self: flex-end; }
+    .notes > .note:nth-child(odd) { align-self: flex-start; }
+  }
+
+  /* A quote: the same hand-drawn note, with big quotation marks. */
+  .hquote {
+    margin: 0;
+    max-width: 420px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px 26px 20px 30px;
+  }
+  .hquote blockquote {
+    margin: 0;
+  }
+  .hquote blockquote::before {
+    content: '\201C';
+    position: absolute;
+    top: -18px;
+    left: 14px;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--tone);
+    font-style: normal;
+  }
+  .hquote figcaption {
+    font-family: var(--font-sans);
+    font-style: normal;
     font-size: 14px;
+    color: var(--muted-foreground);
   }
-  .bub-attention {
-    background: var(--attention-bg);
-    border-color: var(--attention-border);
-    color: var(--foreground);
-  }
-  .bub-attention .bub-mark {
-    background: var(--highlight);
-    color: var(--highlight-foreground);
-  }
-  .bub-due {
-    background: var(--due-bg);
-    border-color: var(--due-border);
-    color: var(--foreground);
-  }
-  .bub-due .bub-mark {
-    background: var(--due);
-    color: var(--due-mark-foreground);
-  }
-  .bub-stop {
-    background: var(--stop-bg);
-    border-color: var(--stop-border);
-    color: var(--foreground);
-  }
-  .bub-stop .bub-mark {
-    background: var(--stop);
-    color: #ffffff;
+  .hquote.is-placeholder blockquote {
+    color: var(--muted-foreground);
   }
 
   .step-label {
@@ -430,13 +439,6 @@
   }
   .btn-inverse:hover {
     background: color-mix(in srgb, var(--band-foreground) 88%, var(--band));
-  }
-  @media (prefers-color-scheme: dark) {
-    .btn-inverse {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: var(--primary-foreground);
-    }
   }
 
   /* FAQ, built on <details>: no script. */
@@ -514,8 +516,8 @@
 }
 
 /* The portrait sits on its own warm paper (#FCF5ED); fade its edges into the
-   page so no rectangle shows. Dark mode keeps it as a rounded card. */
-@media (prefers-color-scheme: light) {
+   page so no rectangle shows. */
+@media all {
   .portrait-fade img {
     -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
       linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
