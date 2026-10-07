@@ -54,9 +54,9 @@
   "home": {
     "hero": {
       "eyebrow": "Pour les entrepreneurs belges · pro et privé",
-      "line1": "De la paperasse ?",
+      "line1": "De l'admin ?",
       "line2": "Use Sybil.",
-      "lead": "Confiez à Sybil vos factures, tickets de caisse et contrats. Elle les classe, les rapproche de vos paiements et ne vous signale que ce qui demande votre attention. Entre-temps, posez-lui toutes vos questions.",
+      "lead": "Confiez à Sybil vos factures, tickets de caisse et contrats. Elle les classe, les rapproche de vos paiements et vous signale ce qui demande votre attention. Entre-temps, posez-lui toutes vos questions.",
       "primary": "Essayez gratuitement sur vos propres documents",
       "secondary": "Comment ça marche",
       "points": [
@@ -66,15 +66,15 @@
       ],
       "portraitAlt": "Dessin de Sybil, souriante à son bureau, avec une tasse de café et un ordinateur portable.",
       "stopLabel": "Stop",
-      "stopText": "Le compte bancaire de votre fournisseur a changé. Paiement suspendu.",
+      "stopText": "Le compte bancaire de votre fournisseur a changé. Verifiez le compte avant le paiement.",
       "foundLabel": "Sybil a trouvé",
-      "foundText": "Le T3 est complet. 47 justificatifs, tous rapprochés."
+      "foundText": "Le T3 est complet. 47 justificatifs, tous raccordés."
     },
     "whatIs": {
-      "title": "Qu'est-ce que Use Sybil ?",
+      "title": "Use Sybil , c'est quoi?",
       "body": [
         "Use Sybil est un logiciel de pré-comptabilité pour les entrepreneurs belges : dirigeants d'une société de management, indépendants et petites entreprises. Sybil, l'assistante intégrée à l'application, lit vos tickets de caisse, factures, factures électroniques et contrats, classe chaque document en Professionnel ou Privé, le rapproche de son paiement bancaire et applique les règles belges de TVA et de déductibilité.",
-        "Chaque trimestre, elle remet à votre comptable un trimestre clôturé : un registre, des justificatifs numérotés et les factures électroniques originales. Pro coûte {pro} et ManCo {manco} par mois, hors TVA. L'essai gratuit ne demande pas de carte."
+        "Chaque trimestre, elle remet à votre comptable un trimestre clôturé : un registre, des justificatifs numérotés et les factures électroniques originales. L'abonnement Pro coûte {pro} et ManCo {manco} par mois, hors TVA. L'essai gratuit ne demande pas de carte."
       ]
     },
     "pains": {
@@ -112,7 +112,7 @@
           "text": "Retaper des IBAN tous les mois."
         }
       ],
-      "resolve": "Sybil vous enlève tout cela, et ne vous fait signe que lorsqu'elle a besoin de vous."
+      "resolve": "Sybil vous enlève toute cette charge, et ne vous fait signe que lorsqu'elle a besoin de vous."
     },
     "how": {
       "eyebrow": "Comment ça marche",
@@ -138,7 +138,7 @@
         },
         "together": {
           "label": "3 · Ensemble",
-          "title": "Elle vous prévient. Vous demandez.",
+          "title": "Elle vous prévient. Vous posez vos questions.",
           "text": "Sybil ne se manifeste que quand quelque chose demande votre attention. Et dès que vous vous posez une question, demandez-lui.",
           "noticedLabel": "Sybil a remarqué",
           "noticed": "vous pouvez résilier votre assurance incendie jusqu'au 14 oct.",
@@ -163,7 +163,7 @@
         },
         {
           "title": "Trimestre clôturé",
-          "text": "« Le T3 est complet. 47 justificatifs, tous rapprochés. » En un clic, votre comptable l'a.",
+          "text": "« Le T3 est complet. 47 justificatifs, tous raccordés. » En un clic, votre comptable l'a.",
           "manco": false,
           "stop": false
         },
@@ -233,7 +233,7 @@
           "features": [
             "{mancoAccounts} comptes bancaires ou cartes",
             "Coffre-fort à contrats, dates de préavis, rappels de résiliation",
-            "Calendrier des paiements tiré de vos contrats",
+            "Calendrier des paiements repris de vos contrats",
             "Un contrat encodé une fois, chaque prime suit",
             "Payer en un clic"
           ],
