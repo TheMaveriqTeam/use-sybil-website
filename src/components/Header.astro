@@ -2,7 +2,7 @@
 import LogoMark from './LogoMark.astro';
 import LangSwitch from './LangSwitch.astro';
 import { useCopy } from '../i18n';
-import { localePath, type LocaleCode } from '../i18n/config';
+import { localePath, splitLocalePath, type LocaleCode } from '../i18n/config';
 import { SITE } from '../lib/site';
 
 interface Props {
@@ -17,7 +17,7 @@ const links = [
   { href: `${home}#pricing`, label: t.ui.pricing },
   { href: `${home}#faq`, label: t.ui.faq },
 ];
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = localePath(lang, splitLocalePath(Astro.url.pathname).path);
 ---
 <header class="border-b border-border bg-background">
   <div class="wrap flex flex-wrap items-center gap-x-6 gap-y-0 py-2.5 lg:py-3.5">

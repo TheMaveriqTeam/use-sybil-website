@@ -137,6 +137,18 @@
   a {
     color: var(--primary);
   }
+  /* Dutch and French have long single words ("Gebruiksvoorwaarden") that
+     can be wider than a phone at display sizes: hyphenate rather than
+     scroll sideways. Only words that do not fit are broken. */
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+  :lang(nl) h1,
+  :lang(fr) h1 {
+    hyphens: auto;
+  }
   :focus-visible {
     outline: 2px solid var(--focus);
     outline-offset: 3px;

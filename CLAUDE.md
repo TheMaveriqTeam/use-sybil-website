@@ -24,10 +24,18 @@ fonts, taglines, keys, env vars or analytics in this repo.
 
 ## Content rules
 
-- English first. Copy lives in `src/content/en.json` (edited by Arthur on
-  preview.usesybil.pro, see README), facts and prices in `src/lib/site.ts`
-  and reach the copy as `{tokens}`. Pull before editing copy: the editor
+- English first, then Dutch and French. Copy lives in `src/content/en.json`,
+  `nl.json` and `fr.json`, all with the same keys (edited by Arthur on
+  preview.usesybil.pro, see README); facts and prices in `src/lib/site.ts`
+  reach the copy as `{tokens}`. Pull before editing copy: the editor
   commits straight to `main`. Never hard-code a price in a page.
+- A copy change in English needs the same change in `nl.json` and `fr.json`
+  (same key, same `{tokens}`). A new key goes into all three files.
+- Dutch: "je/jij", boekhouder, btw, "excl. btw". French: "vous", comptable,
+  TVA, "HTVA" / "hors TVA", French no-break spaces before `: ; ? ! %` and
+  inside `« »`. Glossary in README ("Translations"). "Use Sybil", "Pro",
+  "ManCo", "Peppol" and "Sybil Scan" are never translated. Translated
+  placeholders stay in [brackets].
 - Placeholders such as `[Company name]`, `BE [VAT number]`,
   `[contact e-mail]` and `[Pilot customer quote · Name, Company]` stay visibly
   marked until Arthur supplies the real values. Never invent company data,

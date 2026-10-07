@@ -1,0 +1,432 @@
+{
+  "meta": {
+    "home": {
+      "title": "Use Sybil · Pré-comptabilité pour les entrepreneurs belges",
+      "description": "Sybil classe vos tickets de caisse, factures et contrats, les rapproche de vos paiements, applique les règles belges de TVA et de déductibilité et clôture le trimestre pour votre comptable."
+    },
+    "security": {
+      "title": "Sécurité et vos données · Use Sybil",
+      "description": "Comment Use Sybil conserve vos documents : hébergés dans l'UE, chiffrés, jamais utilisés pour entraîner une IA, chaque accès journalisé, 3 ans dans le coffre-fort et un export complet chaque année."
+    },
+    "accountants": {
+      "title": "Pour les comptables · Ce que vous recevez de Use Sybil",
+      "description": "Votre client prépare, vous validez. Chaque trimestre arrive clôturé : un registre en CSV, des justificatifs numérotés, les factures électroniques Peppol originales et un récapitulatif TVA."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité (brouillon) · Use Sybil",
+      "description": "Brouillon de la politique de confidentialité de Use Sybil. Le texte juridique suivra."
+    },
+    "terms": {
+      "title": "Conditions d'utilisation (brouillon) · Use Sybil",
+      "description": "Brouillon des conditions d'utilisation de Use Sybil. Le texte juridique suivra."
+    },
+    "notFound": {
+      "title": "Page introuvable · Use Sybil",
+      "description": "Cette page n'existe pas sur usesybil.pro."
+    }
+  },
+  "ui": {
+    "skip": "Aller au contenu",
+    "siteNav": "Site",
+    "footerNav": "Pied de page",
+    "breadcrumb": "Fil d'Ariane",
+    "home": "Accueil",
+    "how": "Comment ça marche",
+    "security": "Sécurité",
+    "pricing": "Tarifs",
+    "faq": "FAQ",
+    "signIn": "Se connecter",
+    "tryFree": "Essai gratuit",
+    "language": "Langue",
+    "soon": "bientôt",
+    "languageSoon": "{name} : bientôt disponible",
+    "logoLabel": "Use Sybil, accueil",
+    "perMonth": "/ mois HTVA"
+  },
+  "footer": {
+    "line": "Use Sybil · {companyName} · {vatNumber}",
+    "accountants": "Pour les comptables",
+    "security": "Sécurité",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "contact": "Contact : {contactEmail}"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Pour les entrepreneurs belges · pro et privé",
+      "line1": "De la paperasse ?",
+      "line2": "Use Sybil.",
+      "lead": "Confiez à Sybil vos factures, tickets de caisse et contrats. Elle les classe, les rapproche de vos paiements et ne vous signale que ce qui demande votre attention. Entre-temps, posez-lui toutes vos questions.",
+      "primary": "Essayez gratuitement sur vos propres documents",
+      "secondary": "Comment ça marche",
+      "points": [
+        "Sans carte",
+        "{trialDocuments} documents gratuits",
+        "Hébergé dans l'UE"
+      ],
+      "portraitAlt": "Dessin de Sybil, souriante à son bureau, avec une tasse de café et un ordinateur portable.",
+      "stopLabel": "Stop",
+      "stopText": "Le compte bancaire de votre fournisseur a changé. Paiement suspendu.",
+      "foundLabel": "Sybil a trouvé",
+      "foundText": "Le T3 est complet. 47 justificatifs, tous rapprochés."
+    },
+    "whatIs": {
+      "title": "Qu'est-ce que Use Sybil ?",
+      "body": [
+        "Use Sybil est un logiciel de pré-comptabilité pour les entrepreneurs belges : dirigeants d'une société de management, indépendants et petites entreprises. Sybil, l'assistante intégrée à l'application, lit vos tickets de caisse, factures, factures électroniques et contrats, classe chaque document en Professionnel ou Privé, le rapproche de son paiement bancaire et applique les règles belges de TVA et de déductibilité.",
+        "Chaque trimestre, elle remet à votre comptable un trimestre clôturé : un registre, des justificatifs numérotés et les factures électroniques originales. Pro coûte {pro} et ManCo {manco} par mois, hors TVA. L'essai gratuit ne demande pas de carte."
+      ]
+    },
+    "pains": {
+      "eyebrow": "Ça vous parle ?",
+      "title": "L'administratif tombe toujours au pire moment.",
+      "items": [
+        {
+          "tone": "due",
+          "mark": "!",
+          "text": "Dimanche soir, une boîte à chaussures pleine de tickets."
+        },
+        {
+          "tone": "attention",
+          "mark": "!",
+          "text": "Mon comptable me réclame encore des justificatifs."
+        },
+        {
+          "tone": "due",
+          "mark": "?",
+          "text": "Société ou privé ? Je ne sais jamais."
+        },
+        {
+          "tone": "attention",
+          "mark": "!",
+          "text": "J'ai raté la date de résiliation. Encore."
+        },
+        {
+          "tone": "stop",
+          "mark": "!",
+          "text": "Ce fournisseur a-t-il toujours utilisé ce compte ?"
+        },
+        {
+          "tone": "due",
+          "mark": "!",
+          "text": "Retaper des IBAN tous les mois."
+        }
+      ],
+      "resolve": "Sybil vous enlève tout cela, et ne vous fait signe que lorsqu'elle a besoin de vous."
+    },
+    "how": {
+      "eyebrow": "Comment ça marche",
+      "title": "Confiez-lui tout. Puis fermez l'appli.",
+      "steps": {
+        "you": {
+          "label": "1 · Vous",
+          "title": "Confiez tous vos documents",
+          "text": "Déposez des fichiers, photographiez vos tickets ou transférez vos e-mails. Un trimestre entier d'un coup, c'est possible.",
+          "demo": "14 documents déposés · Sybil lit…"
+        },
+        "sybil": {
+          "label": "2 · Sybil",
+          "title": "Elle classe et rapproche",
+          "text": "Montant, fournisseur, déductibilité, TVA, Professionnel ou Privé. Chaque justificatif associé à son paiement.",
+          "demoSupplier": "Café Botanique",
+          "demoAmount": "€ 86,40",
+          "demoTags": [
+            "Professionnel",
+            "69 % déductible",
+            "✓✓ rapproché"
+          ]
+        },
+        "together": {
+          "label": "3 · Ensemble",
+          "title": "Elle vous prévient. Vous demandez.",
+          "text": "Sybil ne se manifeste que quand quelque chose demande votre attention. Et dès que vous vous posez une question, demandez-lui.",
+          "noticedLabel": "Sybil a remarqué",
+          "noticed": "vous pouvez résilier votre assurance incendie jusqu'au 14 oct.",
+          "question": "Combien la société me doit-elle encore ?",
+          "answerAmount": "€ 312,40",
+          "answer": ", pour 4 tickets. Je prépare la note de frais ?",
+          "chatLabel": "Exemple de conversation avec Sybil"
+        }
+      }
+    },
+    "outcomes": {
+      "eyebrow": "Ce qui change pour vous",
+      "title": "Quatre moments que vous raconterez.",
+      "manco": "ManCo",
+      "mancoLabel": "formule ManCo",
+      "items": [
+        {
+          "title": "L'IBAN repéré",
+          "text": "« Stop. Le compte bancaire de ce fournisseur a changé. » Bloqué avant de payer, pas après.",
+          "manco": false,
+          "stop": true
+        },
+        {
+          "title": "Trimestre clôturé",
+          "text": "« Le T3 est complet. 47 justificatifs, tous rapprochés. » En un clic, votre comptable l'a.",
+          "manco": false,
+          "stop": false
+        },
+        {
+          "title": "Plus jamais de date de préavis ratée",
+          "text": "Sybil lit vos contrats, planifie chaque paiement et vous prévient tant que vous pouvez encore résilier.",
+          "manco": true,
+          "stop": false
+        },
+        {
+          "title": "Payer en un clic",
+          "text": "Chaque facture s'ouvre pré-remplie dans votre appli bancaire. Fini de retaper.",
+          "manco": true,
+          "stop": false
+        }
+      ]
+    },
+    "trust": {
+      "eyebrow": "Confiance",
+      "title": "Vos documents, entre les mains de votre assistante personnelle.",
+      "items": [
+        {
+          "title": "Hébergé dans l'UE",
+          "text": "Chiffré, et jamais utilisé pour entraîner une IA."
+        },
+        {
+          "title": "3 ans dans le coffre-fort, puis à vous",
+          "text": "Chaque année clôturée vous revient sous forme d'export complet."
+        },
+        {
+          "title": "Des faits, jamais de conseils",
+          "text": "Payée par vous. Elle ne vend jamais de données et ne pousse aucun produit."
+        },
+        {
+          "title": "Votre comptable garde la main",
+          "text": "Votre comptable reçoit un trimestre clôturé : registre, justificatifs numérotés, factures électroniques."
+        }
+      ],
+      "more": "Comment nous protégeons vos données"
+    },
+    "pricing": {
+      "eyebrow": "Tarifs",
+      "title": "Commencez gratuitement. Choisissez plus tard.",
+      "lead": "Sans carte. Gratuit jusqu'à {trialDocuments} documents ou votre premier rapport. Vous commencez par un Sybil Scan du trimestre précédent.",
+      "plans": [
+        {
+          "id": "pro",
+          "name": "{proName}",
+          "price": "{pro}",
+          "audience": "Indépendants et petites entreprises",
+          "features": [
+            "Professionnel et Privé, par projet",
+            "{proAccounts} comptes bancaires ou cartes",
+            "Règles belges de déductibilité et de TVA",
+            "Peppol et facturation",
+            "Demandez à Sybil, coffre-fort, dossier trimestriel"
+          ],
+          "cta": "Essayer Pro gratuitement",
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "id": "manco",
+          "name": "{mancoName}",
+          "price": "{manco}",
+          "audience": "Tout Pro, plus vos contrats",
+          "features": [
+            "{mancoAccounts} comptes bancaires ou cartes",
+            "Coffre-fort à contrats, dates de préavis, rappels de résiliation",
+            "Calendrier des paiements tiré de vos contrats",
+            "Un contrat encodé une fois, chaque prime suit",
+            "Payer en un clic"
+          ],
+          "cta": "Essayer ManCo gratuitement",
+          "featured": true,
+          "badge": "Pour les dirigeants de société de management"
+        }
+      ],
+      "extra": "Besoin de plus ? Chaque compte bancaire ou carte supplémentaire coûte {extra} / mois, uniquement tant qu'il est connecté.",
+      "quotesLabel": "Ce que disent nos clients (citations à venir)",
+      "quotes": [
+        {
+          "text": "[Citation client pilote]",
+          "who": "[Nom, entreprise]"
+        },
+        {
+          "text": "[Recommandation d'un comptable]",
+          "who": "[Nom, cabinet]"
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Avant de commencer.",
+      "lead": "Autre chose ? Demandez à Sybil pendant l'essai gratuit, ou écrivez-nous.",
+      "items": [
+        {
+          "q": "Est-ce que cela remplace mon comptable ?",
+          "a": "Non. Sybil prépare, votre comptable valide. Elle lui fait gagner du temps en lui remettant un trimestre clôturé et complet."
+        },
+        {
+          "q": "Mes données sont-elles en sécurité ?",
+          "a": "Hébergées dans l'UE, chiffrées, jamais utilisées pour entraîner une IA. Vous voyez chaque accès et pouvez verrouiller les documents que Sybil ne doit pas lire."
+        },
+        {
+          "q": "Combien de temps mes documents sont-ils conservés ?",
+          "a": "{vaultYears} ans dans le coffre-fort. Chaque année clôturée vous revient sous forme d'export complet et indexé, à archiver. Votre comptable peut vous dire combien de temps la loi vous demande de les conserver."
+        },
+        {
+          "q": "Pro et privé dans une seule appli ?",
+          "a": "Oui. Chaque document arrive dans le bon univers, et les documents privés ne vont jamais chez votre comptable."
+        },
+        {
+          "q": "Que se passe-t-il après l'essai ?",
+          "a": "Vous choisissez Pro ou ManCo. Sinon, votre compte passe en lecture seule et tout reste dans votre coffre-fort."
+        },
+        {
+          "q": "Combien coûte Use Sybil ?",
+          "a": "Pro coûte {pro} par mois et ManCo {manco} par mois, hors TVA. Pro inclut {proAccounts} comptes bancaires ou cartes connectés, ManCo en inclut {mancoAccounts}. Chaque compte ou carte supplémentaire coûte {extra} par mois, uniquement tant qu'il est connecté. L'essai gratuit ne demande pas de carte et dure jusqu'à {trialDocuments} documents ou votre premier rapport."
+        },
+        {
+          "q": "À qui s'adresse Use Sybil ?",
+          "a": "Aux entrepreneurs belges qui gèrent eux-mêmes leurs papiers : dirigeants d'une société de management, indépendants et petites entreprises. Pro convient aux indépendants et aux petites entreprises. ManCo ajoute tout ce qui touche aux contrats : dates de préavis, rappels de résiliation, calendrier des paiements et paiement en un clic."
+        },
+        {
+          "q": "Use Sybil gère-t-il les factures électroniques Peppol ?",
+          "a": "Oui. Les deux formules incluent la facturation et Peppol. Sybil conserve la facture électronique originale et la transmet à votre comptable avec le trimestre."
+        },
+        {
+          "q": "Sybil me dit-elle quoi faire ?",
+          "a": "Non. Sybil donne des faits et des dates, comme un délai de préavis qui s'ouvre ou un compte bancaire qui a changé, et c'est vous qui décidez. Elle ne recommande jamais de produit et ne vend jamais vos données."
+        }
+      ]
+    },
+    "closing": {
+      "title1": "De la paperasse ?",
+      "title2": "Use Sybil.",
+      "text": "Confiez la paperasse. Gardez l'esprit tranquille.",
+      "cta": "Essayez gratuitement sur vos propres documents",
+      "points": [
+        "Sans carte",
+        "{trialDocuments} documents gratuits",
+        "Hébergé dans l'UE"
+      ]
+    }
+  },
+  "security": {
+    "eyebrow": "Sécurité",
+    "title": "Vos documents, en sécurité et à vous.",
+    "lead": "Use Sybil lit vos factures, tickets de caisse, contrats et mouvements bancaires. Cette page explique comment ces données sont conservées, qui peut les voir et comment vous les récupérez.",
+    "sections": [
+      {
+        "title": "Hébergé dans l'UE",
+        "text": "Vos documents et données sont stockés et traités dans l'Union européenne."
+      },
+      {
+        "title": "Chiffré",
+        "text": "Vos données sont chiffrées pendant leur transfert vers Use Sybil et là où elles sont stockées."
+      },
+      {
+        "title": "Jamais utilisé pour entraîner une IA",
+        "text": "Vos documents sont lus pour gérer votre administratif. Ils ne servent jamais à entraîner des modèles d'IA."
+      },
+      {
+        "title": "Vous voyez chaque accès",
+        "text": "Un journal des accès indique qui a ouvert quoi, et quand. Vous le trouvez dans Paramètres, sous Sécurité."
+      },
+      {
+        "title": "Verrouillez ce que Sybil ne doit pas lire",
+        "text": "Vous pouvez verrouiller un document. Un document verrouillé reste dans votre coffre-fort et Sybil ne le lit pas."
+      },
+      {
+        "title": "{vaultYears} ans dans le coffre-fort, puis à vous",
+        "text": "Les documents restent {vaultYears} ans dans votre coffre-fort. Chaque fois qu'une année est clôturée, vous recevez un export complet et indexé, factures électroniques originales comprises, à conserver dans vos propres archives. Votre comptable peut vous dire combien de temps la loi vous demande de les conserver."
+      },
+      {
+        "title": "Le privé reste privé",
+        "text": "Chaque document est classé en Professionnel ou Privé. Les documents privés ne vont jamais chez votre comptable."
+      },
+      {
+        "title": "Payé par vous, et seulement par vous",
+        "text": "Use Sybil est payé par ses clients. Sybil ne vend jamais de données et ne pousse jamais de produit."
+      },
+      {
+        "title": "Un stop avant un mauvais paiement",
+        "text": "Quand Sybil ne peut pas garantir à qui vous payez (un fournisseur inconnu, un compte bancaire modifié, un nom de compte qui ne correspond pas), elle suspend le paiement jusqu'à votre confirmation."
+      }
+    ],
+    "report": {
+      "title": "Vous avez trouvé un problème de sécurité ?",
+      "text": "Écrivez à {securityEmail}."
+    }
+  },
+  "accountants": {
+    "eyebrow": "Pour les comptables",
+    "title": "Votre client prépare. Vous validez.",
+    "lead": "Use Sybil trie, rapproche et relance avant que quoi que ce soit ne vous parvienne. Vous recevez un trimestre clôturé et complet, prêt pour votre propre logiciel.",
+    "packTitle": "Ce que vous recevez chaque trimestre",
+    "pack": [
+      {
+        "title": "Un trimestre clôturé",
+        "text": "Votre client clôture le trimestre dès que chaque justificatif est rapproché de son paiement, puis vous l'envoie en un clic."
+      },
+      {
+        "title": "Le registre, en CSV",
+        "text": "Une ligne par justificatif, numérotée comme les justificatifs eux-mêmes."
+      },
+      {
+        "title": "Des justificatifs numérotés",
+        "text": "Chaque ticket et chaque facture en PDF, numéroté selon sa ligne dans le registre."
+      },
+      {
+        "title": "Les factures électroniques originales",
+        "text": "Les factures électroniques Peppol telles que reçues ou envoyées, dans leur format UBL d'origine, à côté de leur PDF."
+      },
+      {
+        "title": "Un récapitulatif TVA",
+        "text": "Les totaux du trimestre, avec la TVA et les montants nets libellés en toutes lettres."
+      }
+    ],
+    "professionalTitle": "Uniquement le professionnel",
+    "professionalText": "Votre client garde ses papiers professionnels et privés dans une seule appli. Le dossier qui vous est envoyé est toujours uniquement Professionnel : les documents privés ne quittent jamais son coffre-fort.",
+    "howTitle": "Comment chaque ligne a été préparée",
+    "how": [
+      "Chaque valeur indique sa provenance : lue par Sybil, confirmée par votre client ou vérifiée auprès de la banque.",
+      "La déductibilité et la TVA suivent les règles belges. Quand Sybil n'a pas pu lire quelque chose, elle interroge votre client avant la clôture du trimestre.",
+      "Sybil donne des faits, jamais de conseils. La comptabilité, les déclarations et la validation restent entre vos mains."
+    ],
+    "deliveryTitle": "Où il arrive",
+    "deliveryText": "Le dossier est envoyé dans votre boîte de réception de documents, l'adresse que votre client configure une seule fois dans Use Sybil.",
+    "cta": "Voir comment vos clients l'utilisent"
+  },
+  "legal": {
+    "draftBadge": "Brouillon",
+    "draftNote": "Brouillon, texte juridique à venir.",
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "intro": "Cette page accueillera la politique de confidentialité de Use Sybil. En attendant le texte juridique, voici les engagements déjà pris sur ce site :",
+      "points": [
+        "Vos documents et données sont hébergés dans l'UE et chiffrés.",
+        "Vos documents ne servent jamais à entraîner une IA.",
+        "Sybil ne vend jamais de données.",
+        "Vous voyez chaque accès dans le journal des accès et pouvez verrouiller les documents que Sybil ne doit pas lire.",
+        "Les documents privés ne vont jamais chez votre comptable."
+      ],
+      "controller": "Responsable du traitement : {companyName}, {vatNumber}. Contact : {contactEmail}."
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "intro": "Cette page accueillera les conditions d'utilisation de Use Sybil. En attendant le texte juridique, voici comment le service fonctionne aujourd'hui :",
+      "points": [
+        "L'essai gratuit ne demande pas de carte et dure jusqu'à {trialDocuments} documents ou votre premier rapport.",
+        "Pro coûte {pro} et ManCo {manco} par mois, hors TVA. Chaque compte bancaire ou carte connecté supplémentaire coûte {extra} par mois, uniquement tant qu'il est connecté.",
+        "Après l'essai, vous choisissez une formule. Sinon, votre compte passe en lecture seule et vos documents restent dans votre coffre-fort.",
+        "Sybil donne des faits, jamais de conseils. Votre comptable reste responsable de votre comptabilité."
+      ],
+      "provider": "Prestataire : {companyName}, {vatNumber}."
+    }
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "title": "Cette page n'est pas ici.",
+    "text": "Le lien est peut-être ancien, ou l'adresse mal saisie. Tout le reste est à sa place.",
+    "cta": "Retour à l'accueil"
+  }
+}

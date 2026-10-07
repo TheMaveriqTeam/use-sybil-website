@@ -2,9 +2,11 @@
  * Edit mode: the build behind preview.usesybil.pro (PUBLIC_SYBIL_EDIT=1).
  *
  * Each copy string is wrapped in zero-width characters that carry its key in
- * src/content/en.json. public/sybil-edit.js finds them in the page, strips
- * them and makes that text editable; Publish sends the changes to
- * api/save.js, which commits en.json and so redeploys the live site.
+ * src/content/<locale>.json (keys are the same in en, nl and fr). The page
+ * also embeds its own language's JSON (#sybil-copy, with a `locale` field).
+ * public/sybil-edit.js finds the markers, strips them and makes that text
+ * editable; Publish sends the changes and the locale to api/save.js, which
+ * commits that language's JSON and so redeploys the live site.
  *
  * The live site is built without PUBLIC_SYBIL_EDIT and contains none of this.
  */

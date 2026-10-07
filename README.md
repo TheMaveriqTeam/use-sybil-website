@@ -29,13 +29,13 @@ line). Its PNG output is committed, so Vercel builds don't run it.
 
 | What | Where |
 | --- | --- |
-| All visible copy (EN) | `src/content/en.json` (loaded and filled in by `src/i18n/en.ts`) |
+| All visible copy | `src/content/en.json`, `nl.json`, `fr.json` (same keys; loaded and filled in by `src/i18n/load.ts`) |
 | Prices, limits, app URLs, placeholders | `src/lib/site.ts` |
-| Languages (live / planned) | `src/i18n/config.ts`, `astro.config.mjs` (`i18n`) |
+| Languages (EN, NL, FR; live / planned) | `src/i18n/config.ts`, `astro.config.mjs` (`i18n`) |
 | Design tokens (colours light + dark, type, radii) | `src/styles/global.css` (mirrors `Use-Sybil/src/index.css`) |
 | Brand files (mark, app icon, avatar, portrait) | `src/assets/brand/` |
 | Page layouts | `src/views/*.astro` (one per page, take a `lang` prop) |
-| Routes | `src/pages/` (thin wrappers around the views) |
+| Routes | `src/pages/` (English), `src/pages/nl/`, `src/pages/fr/` (thin wrappers around the views) |
 | `<head>`: title, description, canonical, hreflang, OG, JSON-LD | `src/layouts/BaseLayout.astro`, `src/lib/schema.ts` |
 | `robots.txt`, `llms.txt`, `llms-full.txt` | `src/pages/*.txt.ts`, `src/lib/llms.ts` |
 | OG image + icons generator | `scripts/build-og.mjs` |
@@ -51,13 +51,22 @@ serves it at `preview.usesybil.pro` (noindex). There, every text can be
 clicked and edited in place, and **All texts** lists the rest (page titles,
 descriptions, screen-reader labels). The whole preview sits behind a
 login screen (`middleware.js`, `api/login.js`, a 14-day session cookie).
-**Publish** calls `api/save.js`, which commits `src/content/en.json` to
-`main`: the live site rebuilds in about a minute.
+**Publish** calls `api/save.js`, which commits that page's language file to
+`main`: `src/content/en.json` from `/`, `nl.json` from `/nl/…`, `fr.json`
+from `/fr/…`. The live site rebuilds in about a minute.
+
+- Each language is edited on its own pages: to change Dutch text, open
+  `preview.usesybil.pro/nl`. The bar shows which language you are editing.
+- Unpublished edits are kept per language, so English and Dutch edits
+  never mix and each Publish commits one file.
+- French typography uses no-break spaces (`Pourquoi ?`, `« Stop »`,
+  `Contact : …`) and prices use a narrow one (`€ 86,40`); the editor keeps
+  them.
 
 - `{pro}`, `{manco}`, `{extra}`, `{trialDocuments}` and the other `{tokens}`
   are filled in from `src/lib/site.ts`; keep them when editing a sentence.
-- Unpublished edits stay in that browser, across pages, until published or
-  discarded.
+- Unpublished edits stay in that browser, across pages of the same
+  language, until published or discarded.
 - Preview project env: `PUBLIC_SYBIL_EDIT=1`, `EDIT_PASSWORD`, `GITHUB_TOKEN`
   (fine-grained, this repo only, Contents: read and write). The live
   project has none of these: its `/api/save` answers 404 and its pages
@@ -69,11 +78,29 @@ login screen (`middleware.js`, `api/login.js`, a 14-day session cookie).
 
 ## Pages
 
+Each page exists in English (no prefix), Dutch (`/nl`, nl-BE) and French
+(`/fr`, fr-BE), with the same slugs: `/security`, `/nl/security`,
+`/fr/security`.
+
 - `/`: landing page (built from the approved "Use Sybil · Website" board)
 - `/security`: the Trust facts, expanded
 - `/for-accountants`: what the accountant receives each quarter
 - `/privacy`, `/terms`: **drafts**, `noindex`, left out of the sitemap
-- `404`
+- `404`: English only (the language switch there leads to `/nl` and `/fr`)
+
+### Translations
+
+- Dutch uses "je/jij" (the brand's direct tone), French uses "vous".
+- Glossary: accountant = boekhouder / comptable; VAT = btw / TVA; excl. VAT
+  = excl. btw / HTVA (hors TVA in sentences); management company =
+  managementvennootschap / société de management; receipt = kasticket /
+  ticket de caisse; proof = bewijsstuk / justificatif; vault = kluis /
+  coffre-fort; notice date = opzegdatum / date de préavis; Professional /
+  Personal = Professioneel / Privé, Professionnel / Privé.
+- "Use Sybil", "Sybil", "Pro", "ManCo", "Peppol" and "Sybil Scan" are never
+  translated. Money stays `€ 39`, `€ 86,40` in every language.
+- `{tokens}` from `src/lib/site.ts` (including the English placeholders
+  `[Company name]`, `BE [VAT number]`) are the same in every file.
 
 ## SEO and GEO
 
@@ -82,23 +109,36 @@ login screen (`middleware.js`, `api/login.js`, a 14-day session cookie).
   1200×630), and one JSON-LD `@graph` (Organization, WebSite, WebPage).
   The home page adds SoftwareApplication (Pro € 39 and ManCo € 69 a month,
   excl. VAT, Belgium) and FAQPage. Sub-pages add BreadcrumbList.
-- `hreflang` is only written for live languages, plus `x-default` → English.
-- `@astrojs/sitemap` writes `sitemap-index.xml`. `robots.txt` allows every
+- `hreflang` is only written for live languages (en, nl-BE, fr-BE), plus
+  `x-default` → English; `og:locale` and `og:locale:alternate` follow.
+- `@astrojs/sitemap` writes `sitemap-index.xml`, with the same language
+  alternates per URL. `robots.txt` allows every
   crawler, including the AI ones, and points to the sitemap.
 - `/llms.txt` and `/llms-full.txt` give answer engines a plain, factual
   summary: what Use Sybil is, who it is for, plans and prices, what it does
   not do, and links.
 
-## Adding NL or FR
+## Adding a language
 
-1. Copy `src/i18n/en.ts` to `src/i18n/nl.ts`, translate it (type `Copy`),
-   and register it in `src/i18n/index.ts`.
-2. In `src/i18n/config.ts`, set the locale's `status` to `'live'`.
-3. In `astro.config.mjs`, add `'nl'` to `i18n.locales`.
-4. Add `src/pages/nl/` with the same thin files as `src/pages/`, passing
-   `lang="nl"` (for example `<Home lang="nl" />`).
-5. The language switch, `hreflang` alternates and `<html lang>` follow
-   automatically. "Use Sybil" stays in English in every language.
+English, Dutch and French are live. For another one (say `de`):
+
+1. Copy `src/content/en.json` to `src/content/de.json` and translate the
+   values. Keep every key, every `{token}` and the non-text values (`tone`,
+   `id`, `mark`, `manco`, `stop`, `featured`) exactly as they are.
+2. Add `src/i18n/de.ts` like `nl.ts` (`buildCopy(raw)`, typed `Copy`: a
+   missing key is a type error), and register it in `src/i18n/index.ts`
+   (`dictionaries` and `RAW_COPY`).
+3. In `src/i18n/config.ts`, add `'de'` to `LocaleCode` and a `LOCALES` entry
+   with `status: 'live'`.
+4. In `astro.config.mjs`, add `'de'` to `LOCALES`, to the prefix in
+   `withoutLocale` and to the sitemap `i18n.locales`.
+5. Add `src/pages/de/` with the same thin files as `src/pages/nl/`, passing
+   `lang="de"`.
+6. In `api/save.js`, add `'de'` to `LOCALES`; in `public/sybil-edit.js`, to
+   the locale check. The editor then works on `/de/…` too.
+7. The language switch, `hreflang`, sitemap alternates, `<html lang>`,
+   `og:locale` and JSON-LD `inLanguage` follow automatically. "Use Sybil"
+   stays in English in every language.
 
 ## Deploy
 

@@ -1,11 +1,12 @@
 /*
  * POST /api/save: publishes text edits made on preview.usesybil.pro.
  *
- * Body: { changes: [{ key, from, to }] } where key is a dotted path in
- * src/content/en.json. The caller must be signed in (api/login.js sets the
- * session cookie; middleware.js keeps the whole preview behind it).
- * The function commits the new en.json to GitHub; Vercel then rebuilds the
- * live site (and the preview) from that commit.
+ * Body: { locale, changes: [{ key, from, to }] } where locale is en, nl or
+ * fr (default en) and key is a dotted path in src/content/<locale>.json.
+ * The caller must be signed in (api/login.js sets the session cookie;
+ * middleware.js keeps the whole preview behind it). The function commits
+ * that one JSON file to GitHub; Vercel then rebuilds the live site (and the
+ * preview) from that commit.
  *
  * Only runs where EDIT_PASSWORD and GITHUB_TOKEN are set (the preview
  * project). On the live project it answers 404.
@@ -15,14 +16,21 @@
  */
 import { validSession } from './_session.js';
 
-const FILE = 'src/content/en.json';
+const LOCALES = new Set(['en', 'nl', 'fr']);
+const fileFor = (locale) => `src/content/${locale}.json`;
 const MAX_CHANGES = 200;
 const MAX_LENGTH = 4000;
-// Facts filled in from src/lib/site.ts (see src/i18n/en.ts) and {name} in ui.languageSoon.
+// Facts filled in from src/lib/site.ts (see src/i18n/load.ts) and {name} in ui.languageSoon.
 const TOKENS = new Set([
   'pro', 'manco', 'extra', 'trialDocuments', 'vaultYears', 'proAccounts', 'mancoAccounts',
   'proName', 'mancoName', 'companyName', 'vatNumber', 'contactEmail', 'securityEmail', 'name',
 ]);
+
+// One line; typographic no-break spaces stay (see tidy() in public/sybil-edit.js).
+const tidy = (text) => text
+  .replace(/\u00A0(?![:;?!»%])/g, (m, i, s) => (s[i - 1] === '«' ? m : ' '))
+  .replace(/[ \t\n\r\f\v]+/g, ' ')
+  .trim();
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -65,6 +73,9 @@ export default async function handler(req, res) {
   }
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+  const locale = body.locale ?? 'en';
+  if (typeof locale !== 'string' || !LOCALES.has(locale)) return res.status(400).json({ error: 'Unknown language' });
+  const FILE = fileFor(locale);
   const changes = Array.isArray(body.changes) ? body.changes : [];
   if (!changes.length) return res.status(200).json({ ok: true, published: 0 });
   if (changes.length > MAX_CHANGES) return res.status(400).json({ error: `At most ${MAX_CHANGES} changes at once` });
@@ -73,7 +84,7 @@ export default async function handler(req, res) {
     if (typeof c?.key !== 'string' || !/^[A-Za-z0-9_.]+$/.test(c.key) || /\.(tone|id)$/.test(c.key)) {
       return res.status(400).json({ error: `Not an editable text: ${String(c?.key)}` });
     }
-    if (typeof c.to !== 'string' || !c.to.trim() || c.to.length > MAX_LENGTH) {
+    if (typeof c.to !== 'string' || !tidy(c.to) || c.to.length > MAX_LENGTH) {
       return res.status(400).json({ error: `Text for ${c.key} is empty or too long` });
     }
     const unknown = [...c.to.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).filter((t) => !TOKENS.has(t));
@@ -83,7 +94,7 @@ export default async function handler(req, res) {
   const branch = process.env.GITHUB_BRANCH || 'main';
   const current = await gh(`contents/${FILE}?ref=${encodeURIComponent(branch)}`);
   if (!current.ok) {
-    console.error('read en.json', current.status, await current.text());
+    console.error(`read ${FILE}`, current.status, await current.text());
     return res.status(502).json({ error: 'Could not read the website text from GitHub' });
   }
   const file = await current.json();
@@ -99,14 +110,14 @@ export default async function handler(req, res) {
     const live = spot.parent[spot.last];
     if (live === c.to) continue; // already published
     if (typeof c.from === 'string' && live !== c.from) { conflicts.push(c.key); continue; }
-    spot.parent[spot.last] = c.to.replace(/\s+/g, ' ').trim();
+    spot.parent[spot.last] = tidy(c.to);
     applied++;
   }
   if (conflicts.length) return res.status(409).json({ error: 'Changed in the meantime', conflicts });
   if (!applied) return res.status(200).json({ ok: true, published: 0 });
 
   const keys = changes.map((c) => c.key);
-  const message = `Website text: ${applied} ${applied === 1 ? 'edit' : 'edits'} from the editor\n\n${keys.map((k) => `- ${k}`).join('\n')}`;
+  const message = `Website text (${locale.toUpperCase()}): ${applied} ${applied === 1 ? 'edit' : 'edits'} from the editor\n\n${keys.map((k) => `- ${k}`).join('\n')}`;
   const put = await gh(`contents/${FILE}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -121,7 +132,7 @@ export default async function handler(req, res) {
     return res.status(409).json({ error: 'The text changed while publishing. Try again.', conflicts: [] });
   }
   if (!put.ok) {
-    console.error('write en.json', put.status, await put.text());
+    console.error(`write ${FILE}`, put.status, await put.text());
     return res.status(502).json({ error: 'GitHub refused the change. Nothing was published.' });
   }
   const out = await put.json();

@@ -18,12 +18,11 @@ import bodyFont from '@fontsource/geist/files/geist-latin-400-normal.woff2?url';
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { useCopy } from '../i18n';
+import { RAW_COPY, useCopy } from '../i18n';
 import { DEFAULT_LOCALE, LIVE_LOCALES, getLocale, localePath, type LocaleCode } from '../i18n/config';
 import { SITE } from '../lib/site';
 import { EDIT_MODE } from '../lib/editMode';
-import rawCopy from '../content/en.json';
-import { TOKENS } from '../i18n/en';
+import { TOKENS } from '../i18n/load';
 import { breadcrumbList, graph, organization, serialise, webPage, website } from '../lib/schema';
 
 interface Props {
@@ -103,6 +102,7 @@ const jsonLd = graph([
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale.ogLocale} />
+    {alternates && !noindex && LIVE_LOCALES.filter((l) => l.code !== lang).map((l) => <meta property="og:locale:alternate" content={l.ogLocale} />)}
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
@@ -117,7 +117,7 @@ const jsonLd = graph([
     <script is:inline type="application/ld+json" set:html={serialise(jsonLd)} />
     {EDIT_MODE && (
       <>
-        <script is:inline type="application/json" id="sybil-copy" set:html={serialise({ copy: rawCopy, tokens: TOKENS })} />
+        <script is:inline type="application/json" id="sybil-copy" set:html={serialise({ locale: lang, copy: RAW_COPY[lang], tokens: TOKENS })} />
         <link rel="stylesheet" href="/sybil-edit.css" />
         <script is:inline src="/sybil-edit.js" defer />
       </>

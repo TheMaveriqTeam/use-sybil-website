@@ -1,5 +1,5 @@
 ---
-import { LOCALES, type LocaleCode } from '../i18n/config';
+import { LOCALES, localePath, splitLocalePath, type LocaleCode } from '../i18n/config';
 import { useCopy } from '../i18n';
 
 interface Props {
@@ -8,6 +8,10 @@ interface Props {
 }
 const { current, class: className = '' } = Astro.props;
 const t = useCopy(current);
+// The same page in the other language. The 404 page exists in English only,
+// so from there the switch leads to the other language's home page.
+const { path } = splitLocalePath(Astro.url.pathname);
+const target = path === '/404' ? '/' : path;
 ---
 <div class:list={['items-center text-sm text-muted-foreground', className]} role="group" aria-label={t.ui.language}>
   {LOCALES.map((l, i) => (
@@ -19,7 +23,7 @@ const t = useCopy(current);
           <span class="sr-only">{l.name}</span>
         </span>
       ) : l.status === 'live' ? (
-        <a href={`/${l.code}`} lang={l.tag} hreflang={l.tag} class="inline-flex min-h-11 items-center text-muted-foreground no-underline hover:underline">
+        <a href={localePath(l.code, target)} lang={l.tag} hreflang={l.tag} class="inline-flex min-h-11 items-center text-muted-foreground no-underline hover:underline">
           {l.label}
         </a>
       ) : (

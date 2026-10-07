@@ -3,9 +3,11 @@
  * built with PUBLIC_SYBIL_EDIT=1; see src/lib/editMode.ts).
  *
  * Every copy string arrives wrapped in zero-width characters that carry its
- * key in src/content/en.json. This script turns those into editable spans,
- * keeps unpublished changes in this browser (across pages) and publishes
- * them through /api/save, which commits en.json: the live site rebuilds.
+ * key in src/content/<locale>.json (en, nl or fr: the page's language, given
+ * in #sybil-copy). This script turns those into editable spans, keeps
+ * unpublished changes in this browser (across pages, one list per language)
+ * and publishes them through /api/save, which commits that language's JSON:
+ * the live site rebuilds.
  */
 (() => {
   'use strict';
@@ -15,12 +17,16 @@
   const MARK = new RegExp(`${START}([${DIGITS.join('')}]+)${SEP}([\\s\\S]*?)${END}`, 'g');
   const STRAY = new RegExp(`[${START}${SEP}${END}${DIGITS.join('')}]`, 'g');
   const HAS_STRAY = new RegExp(`[${START}${SEP}${END}]`);
-  const STORE = 'sybil-edit-changes';
   const MODE = 'sybil-edit-mode';
 
   const data = JSON.parse(document.getElementById('sybil-copy').textContent);
+  const locale = /^(en|nl|fr)$/.test(data.locale) ? data.locale : 'en';
   const copy = data.copy;
   const tokens = data.tokens;
+  const LANG = locale.toUpperCase();
+  // One list of unpublished changes per language, so EN and NL edits never mix
+  // (English keeps the original key, so edits made before NL/FR stay).
+  const STORE = locale === 'en' ? 'sybil-edit-changes' : `sybil-edit-changes-${locale}`;
 
   // ---- helpers ------------------------------------------------------------
 
@@ -35,6 +41,14 @@
   };
 
   const getRaw = (key) => key.split('.').reduce((o, k) => (o == null ? o : o[k]), copy);
+
+  // One line of text: collapse spaces and line breaks. The typographic
+  // no-break spaces stay (€ 86,40, and French "Pourquoi ?" / "« Stop »"); a
+  // no-break space the browser slipped in while typing becomes a space.
+  const tidy = (text) => text
+    .replace(/\u00A0(?![:;?!»%])/g, (m, i, s) => (s[i - 1] === '«' ? m : ' '))
+    .replace(/[ \t\n\r\f\v]+/g, ' ')
+    .trim();
 
   const fill = (text, extra = {}) => text.replace(/\{(\w+)\}/g, (m, k) => extra[k] ?? tokens[k] ?? m);
 
@@ -158,7 +172,7 @@
     span.removeAttribute('contenteditable');
     span.classList.remove('sy-active');
     hideHint();
-    const value = keep ? span.textContent.replace(/\s+/g, ' ').trim() : span.dataset.before;
+    const value = keep ? tidy(span.textContent) : span.dataset.before;
     if (keep && !value) {
       toast('A text can’t be empty. The change was undone.');
       setChange(key, span.dataset.before);
@@ -200,7 +214,7 @@
     const span = document.activeElement;
     if (!span || !span.classList || !span.classList.contains('sy-k')) return;
     e.preventDefault();
-    const text = (e.clipboardData.getData('text/plain') || '').replace(/\s+/g, ' ');
+    const text = (e.clipboardData.getData('text/plain') || '').replace(/[ \t\n\r\f\v]+/g, ' ');
     document.execCommand('insertText', false, text);
   });
 
@@ -223,12 +237,12 @@
   const publishBtn = el('button', { type: 'button', class: 'sy-btn', on: { click: publish } }, 'Publish');
   const signOut = el('a', { href: '/api/login?logout=1', class: 'sy-btn sy-ghost sy-link' }, 'Sign out');
   const bar = el('div', { id: 'sy-bar', role: 'region', 'aria-label': 'Website editor' },
-    el('span', { class: 'sy-title' }, 'Editing usesybil.pro'), countEl,
+    el('span', { class: 'sy-title' }, `Editing usesybil.pro · ${LANG}`), countEl,
     el('span', { class: 'sy-spacer' }), modeBtn, listBtn, discardBtn, publishBtn, signOut);
 
   function updateBar() {
     const n = Object.keys(changes).length;
-    countEl.textContent = n ? `${n} unpublished ${n === 1 ? 'change' : 'changes'}` : 'No changes yet';
+    countEl.textContent = n ? `${n} unpublished ${LANG} ${n === 1 ? 'change' : 'changes'}` : `No ${LANG} changes yet`;
     publishBtn.disabled = !n;
     discardBtn.disabled = !n;
     modeBtn.textContent = editing ? 'Preview' : 'Edit';
@@ -290,7 +304,7 @@
     for (const key of allKeys) {
       const area = el('textarea', { rows: 2, 'data-k': key, on: {
         change: (e) => {
-          const v = e.target.value.replace(/\s+/g, ' ').trim();
+          const v = tidy(e.target.value);
           if (!v) { toast('A text can’t be empty.'); e.target.value = current(key); return; }
           if (unknownTokens(v).length) { toast(`Unknown placeholder ${unknownTokens(v).map((t) => `{${t}}`).join(', ')}.`); e.target.value = current(key); return; }
           setChange(key, v);
@@ -328,7 +342,7 @@
 
   function discard() {
     const n = Object.keys(changes).length;
-    if (!n || !confirm(`Discard ${n} unpublished ${n === 1 ? 'change' : 'changes'}?`)) return;
+    if (!n || !confirm(`Discard ${n} unpublished ${LANG} ${n === 1 ? 'change' : 'changes'}?`)) return;
     const keys = Object.keys(changes);
     changes = {};
     store.write(changes);
@@ -345,7 +359,7 @@
       const res = await fetch('/api/save', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ changes: entries.map(([key, c]) => ({ key, from: c.from, to: c.to })) }),
+        body: JSON.stringify({ locale, changes: entries.map(([key, c]) => ({ key, from: c.from, to: c.to })) }),
       });
       const out = await res.json().catch(() => ({}));
       if (res.status === 401) { toast('Your session ended. Sign in again; your changes are kept in this browser.', 10000); setTimeout(() => location.reload(), 2500); return; }
@@ -363,7 +377,7 @@
       changes = {};
       store.write(changes);
       entries.forEach(([k]) => { render(k); syncPanelField(k); });
-      toast(`Published ${entries.length} ${entries.length === 1 ? 'change' : 'changes'}. The live site updates in about a minute.`, 10000);
+      toast(`Published ${entries.length} ${LANG} ${entries.length === 1 ? 'change' : 'changes'}. The live site updates in about a minute.`, 10000);
     } catch {
       toast('Could not reach the server. Your changes are kept here; try again.');
     } finally {

@@ -1,0 +1,432 @@
+{
+  "meta": {
+    "home": {
+      "title": "Use Sybil · Voorboekhouding voor Belgische ondernemers",
+      "description": "Sybil klasseert kasticketten, facturen en contracten, koppelt ze aan je betalingen, past de Belgische btw- en aftrekregels toe en sluit het kwartaal af voor je boekhouder."
+    },
+    "security": {
+      "title": "Beveiliging en je gegevens · Use Sybil",
+      "description": "Hoe Use Sybil je papieren bewaart: gehost in de EU, versleuteld, nooit gebruikt om AI te trainen, elke toegang gelogd, 3 jaar in de kluis en elk jaar een volledige export."
+    },
+    "accountants": {
+      "title": "Voor boekhouders · Wat je ontvangt van Use Sybil",
+      "description": "Je klant bereidt voor, jij keurt goed. Elk kwartaal komt afgesloten binnen: een register in CSV, genummerde bewijsstukken, originele Peppol-e-facturen en een btw-overzicht."
+    },
+    "privacy": {
+      "title": "Privacybeleid (ontwerp) · Use Sybil",
+      "description": "Ontwerp van het privacybeleid van Use Sybil. De juridische tekst volgt."
+    },
+    "terms": {
+      "title": "Algemene voorwaarden (ontwerp) · Use Sybil",
+      "description": "Ontwerp van de algemene voorwaarden van Use Sybil. De juridische tekst volgt."
+    },
+    "notFound": {
+      "title": "Pagina niet gevonden · Use Sybil",
+      "description": "Deze pagina bestaat niet op usesybil.pro."
+    }
+  },
+  "ui": {
+    "skip": "Naar de inhoud",
+    "siteNav": "Site",
+    "footerNav": "Voettekst",
+    "breadcrumb": "Kruimelpad",
+    "home": "Home",
+    "how": "Hoe het werkt",
+    "security": "Beveiliging",
+    "pricing": "Prijzen",
+    "faq": "FAQ",
+    "signIn": "Aanmelden",
+    "tryFree": "Probeer gratis",
+    "language": "Taal",
+    "soon": "binnenkort",
+    "languageSoon": "{name}: binnenkort beschikbaar",
+    "logoLabel": "Use Sybil, home",
+    "perMonth": "/ maand excl. btw"
+  },
+  "footer": {
+    "line": "Use Sybil · {companyName} · {vatNumber}",
+    "accountants": "Voor boekhouders",
+    "security": "Beveiliging",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "contact": "Contact: {contactEmail}"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Voor Belgische ondernemers · zakelijk en privé",
+      "line1": "Papierwerk?",
+      "line2": "Use Sybil.",
+      "lead": "Geef Sybil je facturen, kasticketten en contracten. Ze klasseert ze, koppelt ze aan je betalingen en laat je alleen weten wat jouw aandacht vraagt. Tussendoor kun je haar alles vragen.",
+      "primary": "Probeer gratis met je eigen papieren",
+      "secondary": "Hoe het werkt",
+      "points": [
+        "Geen kaart nodig",
+        "{trialDocuments} documenten gratis",
+        "Gehost in de EU"
+      ],
+      "portraitAlt": "Tekening van Sybil, glimlachend aan haar bureau met een koffiemok en een laptop.",
+      "stopLabel": "Stop",
+      "stopText": "De bankrekening van je leverancier is gewijzigd. Betaling tegengehouden.",
+      "foundLabel": "Sybil vond",
+      "foundText": "Q3 is compleet. 47 bewijsstukken, allemaal gekoppeld."
+    },
+    "whatIs": {
+      "title": "Wat is Use Sybil?",
+      "body": [
+        "Use Sybil is software voor voorboekhouding voor Belgische ondernemers: eigenaars van een managementvennootschap, zelfstandigen en kleine ondernemingen. Sybil, de assistente in de app, leest je kasticketten, facturen, e-facturen en contracten, klasseert elk document als Professioneel of Privé, koppelt het aan de juiste bankbetaling en past de Belgische btw- en aftrekregels toe.",
+        "Elk kwartaal bezorgt ze je boekhouder een afgesloten kwartaal: een register, genummerde bewijsstukken en de originele e-facturen. Pro kost {pro} en ManCo {manco} per maand, exclusief btw. Voor de gratis proefperiode is geen kaart nodig."
+      ]
+    },
+    "pains": {
+      "eyebrow": "Herkenbaar?",
+      "title": "Administratie komt altijd op het slechtste moment.",
+      "items": [
+        {
+          "tone": "due",
+          "mark": "!",
+          "text": "Zondagavond, een schoenendoos vol kasticketten."
+        },
+        {
+          "tone": "attention",
+          "mark": "!",
+          "text": "Mijn boekhouder vraagt alweer naar ontbrekende bewijsstukken."
+        },
+        {
+          "tone": "due",
+          "mark": "?",
+          "text": "Vennootschap of privé? Ik weet het nooit."
+        },
+        {
+          "tone": "attention",
+          "mark": "!",
+          "text": "Ik heb de opzegdatum gemist. Alweer."
+        },
+        {
+          "tone": "stop",
+          "mark": "!",
+          "text": "Gebruikte die leverancier altijd al deze rekening?"
+        },
+        {
+          "tone": "due",
+          "mark": "!",
+          "text": "Elke maand opnieuw IBAN's overtypen."
+        }
+      ],
+      "resolve": "Sybil haalt het allemaal van je bureau, en laat alleen iets weten als ze jou nodig heeft."
+    },
+    "how": {
+      "eyebrow": "Hoe het werkt",
+      "title": "Geef het door. Sluit dan de app.",
+      "steps": {
+        "you": {
+          "label": "1 · Jij",
+          "title": "Geef al je papieren door",
+          "text": "Sleep bestanden erin, fotografeer kasticketten of stuur e-mails door. Een volledig kwartaal in één keer kan ook.",
+          "demo": "14 documenten toegevoegd · Sybil leest…"
+        },
+        "sybil": {
+          "label": "2 · Sybil",
+          "title": "Ze klasseert en koppelt",
+          "text": "Bedrag, leverancier, aftrekbaarheid, btw, Professioneel of Privé. Elk bewijsstuk gekoppeld aan zijn betaling.",
+          "demoSupplier": "Café Botanique",
+          "demoAmount": "€ 86,40",
+          "demoTags": [
+            "Professioneel",
+            "69% aftrekbaar",
+            "✓✓ gekoppeld"
+          ]
+        },
+        "together": {
+          "label": "3 · Samen",
+          "title": "Zij meldt het. Jij vraagt.",
+          "text": "Sybil laat alleen van zich horen als iets jou nodig heeft. En als je je iets afvraagt, vraag het haar gewoon.",
+          "noticedLabel": "Sybil merkte op",
+          "noticed": "je kunt je brandverzekering opzeggen tot 14 okt.",
+          "question": "Wat is de vennootschap me nog verschuldigd?",
+          "answerAmount": "€ 312,40",
+          "answer": ", voor 4 kasticketten. Zal ik de onkostennota klaarzetten?",
+          "chatLabel": "Voorbeeldgesprek met Sybil"
+        }
+      }
+    },
+    "outcomes": {
+      "eyebrow": "Wat er voor jou verandert",
+      "title": "Vier momenten die je zeker doorvertelt.",
+      "manco": "ManCo",
+      "mancoLabel": "ManCo-abonnement",
+      "items": [
+        {
+          "title": "De IBAN-controle",
+          "text": "\"Stop. De bankrekening van deze leverancier is gewijzigd.\" Tegengehouden vóór je betaalt, niet erna.",
+          "manco": false,
+          "stop": true
+        },
+        {
+          "title": "Kwartaal afgesloten",
+          "text": "\"Q3 is compleet. 47 bewijsstukken, allemaal gekoppeld.\" Eén tik en je boekhouder heeft het.",
+          "manco": false,
+          "stop": false
+        },
+        {
+          "title": "Mis nooit meer een opzegdatum",
+          "text": "Sybil leest je contracten, plant elke betaling en waarschuwt je zolang je nog kunt opzeggen.",
+          "manco": true,
+          "stop": false
+        },
+        {
+          "title": "Betalen met één tik",
+          "text": "Elke factuur opent ingevuld in je bankapp. Nooit meer overtypen.",
+          "manco": true,
+          "stop": false
+        }
+      ]
+    },
+    "trust": {
+      "eyebrow": "Vertrouwen",
+      "title": "Je papieren, in handen van je persoonlijke assistente.",
+      "items": [
+        {
+          "title": "Gehost in de EU",
+          "text": "Versleuteld, en nooit gebruikt om AI te trainen."
+        },
+        {
+          "title": "3 jaar in de kluis, daarna van jou",
+          "text": "Elk afgesloten jaar krijg je terug als volledige export."
+        },
+        {
+          "title": "Feiten, nooit advies",
+          "text": "Betaald door jou. Ze verkoopt nooit gegevens en dringt je geen product op."
+        },
+        {
+          "title": "Je boekhouder blijft aan het roer",
+          "text": "Die krijgt een afgesloten kwartaal: register, genummerde bewijsstukken, e-facturen."
+        }
+      ],
+      "more": "Hoe we je gegevens beschermen"
+    },
+    "pricing": {
+      "eyebrow": "Prijzen",
+      "title": "Begin gratis. Kies later.",
+      "lead": "Geen kaart nodig. Gratis tot {trialDocuments} documenten of je eerste rapport. Je begint met een Sybil Scan van het vorige kwartaal.",
+      "plans": [
+        {
+          "id": "pro",
+          "name": "{proName}",
+          "price": "{pro}",
+          "audience": "Zelfstandigen en kleine ondernemingen",
+          "features": [
+            "Professioneel en Privé, per project",
+            "{proAccounts} bankrekeningen of kaarten",
+            "Belgische aftrek- en btw-regels",
+            "Peppol en facturatie",
+            "Vraag het Sybil, kluis, kwartaalpakket"
+          ],
+          "cta": "Probeer Pro gratis",
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "id": "manco",
+          "name": "{mancoName}",
+          "price": "{manco}",
+          "audience": "Alles van Pro, plus je contracten",
+          "features": [
+            "{mancoAccounts} bankrekeningen of kaarten",
+            "Contractenkluis, opzegdatums, herinneringen om op te zeggen",
+            "Betaalkalender op basis van je contracten",
+            "Stel een contract één keer in, elke premie volgt",
+            "Betalen met één tik"
+          ],
+          "cta": "Probeer ManCo gratis",
+          "featured": true,
+          "badge": "Voor eigenaars van een managementvennootschap"
+        }
+      ],
+      "extra": "Meer nodig? Elke extra bankrekening of kaart kost {extra} / maand, alleen zolang ze verbonden is.",
+      "quotesLabel": "Wat klanten zeggen (citaten volgen)",
+      "quotes": [
+        {
+          "text": "[Citaat pilootklant]",
+          "who": "[Naam, bedrijf]"
+        },
+        {
+          "text": "[Aanbeveling boekhouder]",
+          "who": "[Naam, kantoor]"
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Vragen",
+      "title": "Voor je begint.",
+      "lead": "Nog iets anders? Vraag het Sybil tijdens de gratis proefperiode, of schrijf ons.",
+      "items": [
+        {
+          "q": "Vervangt dit mijn boekhouder?",
+          "a": "Nee. Sybil bereidt voor, je boekhouder keurt goed. Ze bespaart je boekhouder tijd door een afgesloten, volledig kwartaal te bezorgen."
+        },
+        {
+          "q": "Zijn mijn gegevens veilig?",
+          "a": "Gehost in de EU, versleuteld, nooit gebruikt om AI te trainen. Je ziet elke toegang en kunt documenten vergrendelen die Sybil niet mag lezen."
+        },
+        {
+          "q": "Hoelang worden mijn documenten bewaard?",
+          "a": "{vaultYears} jaar in de kluis. Elk afgesloten jaar krijg je terug als volledige, geïndexeerde export om te archiveren. Je boekhouder kan je zeggen hoelang de wet vraagt om ze te bewaren."
+        },
+        {
+          "q": "Zakelijk en privé in één app?",
+          "a": "Ja. Elk document komt in de juiste wereld terecht, en privédocumenten gaan nooit naar je boekhouder."
+        },
+        {
+          "q": "Wat gebeurt er na de proefperiode?",
+          "a": "Je kiest Pro of ManCo. Doe je dat niet, dan wordt je account alleen-lezen en blijft alles in je kluis."
+        },
+        {
+          "q": "Hoeveel kost Use Sybil?",
+          "a": "Pro kost {pro} per maand en ManCo {manco} per maand, allebei exclusief btw. Pro bevat {proAccounts} verbonden bankrekeningen of kaarten, ManCo {mancoAccounts}. Elke extra kost {extra} per maand, alleen zolang ze verbonden is. Voor de gratis proefperiode is geen kaart nodig en ze loopt tot {trialDocuments} documenten of je eerste rapport."
+        },
+        {
+          "q": "Voor wie is Use Sybil?",
+          "a": "Belgische ondernemers die hun eigen papierwerk doen: eigenaars van een managementvennootschap, zelfstandigen en kleine ondernemingen. Pro past bij zelfstandigen en kleine ondernemingen. ManCo voegt alles rond contracten toe: opzegdatums, herinneringen om op te zeggen, een betaalkalender en betalen met één tik."
+        },
+        {
+          "q": "Werkt Use Sybil met Peppol-e-facturen?",
+          "a": "Ja. Beide abonnementen bevatten facturatie en Peppol. Sybil bewaart de originele e-factuur en geeft ze met het kwartaal door aan je boekhouder."
+        },
+        {
+          "q": "Zegt Sybil me wat ik moet doen?",
+          "a": "Nee. Sybil geeft feiten en datums, zoals een opzegtermijn die begint of een bankrekening die gewijzigd is, en jij beslist. Ze raadt nooit een product aan en verkoopt nooit je gegevens."
+        }
+      ]
+    },
+    "closing": {
+      "title1": "Papierwerk?",
+      "title2": "Use Sybil.",
+      "text": "Geef het papierwerk af. Hou je gemoedsrust.",
+      "cta": "Probeer gratis met je eigen papieren",
+      "points": [
+        "Geen kaart nodig",
+        "{trialDocuments} documenten gratis",
+        "Gehost in de EU"
+      ]
+    }
+  },
+  "security": {
+    "eyebrow": "Beveiliging",
+    "title": "Je papieren, veilig bewaard en van jou.",
+    "lead": "Use Sybil leest je facturen, kasticketten, contracten en bankverrichtingen. Op deze pagina lees je hoe die gegevens bewaard worden, wie ze kan zien en hoe je ze terugkrijgt.",
+    "sections": [
+      {
+        "title": "Gehost in de EU",
+        "text": "Je documenten en gegevens worden opgeslagen en verwerkt in de Europese Unie."
+      },
+      {
+        "title": "Versleuteld",
+        "text": "Je gegevens zijn versleuteld onderweg naar Use Sybil en op de plaats waar ze opgeslagen worden."
+      },
+      {
+        "title": "Nooit gebruikt om AI te trainen",
+        "text": "Je documenten worden gelezen om je administratie te doen. Ze worden nooit gebruikt om AI-modellen te trainen."
+      },
+      {
+        "title": "Je ziet elke toegang",
+        "text": "Een toegangslogboek toont wie wat geopend heeft, en wanneer. Je vindt het in Instellingen, onder Beveiliging."
+      },
+      {
+        "title": "Vergrendel wat Sybil niet mag lezen",
+        "text": "Je kunt een document vergrendelen. Een vergrendeld document blijft in je kluis en Sybil leest het niet."
+      },
+      {
+        "title": "{vaultYears} jaar in de kluis, daarna van jou",
+        "text": "Documenten blijven {vaultYears} jaar in je kluis. Telkens een jaar afgesloten is, krijg je een volledige, geïndexeerde export, inclusief de originele e-facturen, voor je eigen archief. Je boekhouder kan je zeggen hoelang de wet vraagt om ze te bewaren."
+      },
+      {
+        "title": "Privé blijft privé",
+        "text": "Elk document wordt geklasseerd als Professioneel of Privé. Privédocumenten gaan nooit naar je boekhouder."
+      },
+      {
+        "title": "Betaald door jou, en alleen door jou",
+        "text": "Use Sybil wordt betaald door zijn klanten. Sybil verkoopt nooit gegevens en dringt nooit een product op."
+      },
+      {
+        "title": "Een stop vóór een verkeerde betaling",
+        "text": "Als Sybil niet kan instaan voor wie je betaalt (een onbekende leverancier, een gewijzigde bankrekening, een rekeningnaam die niet klopt), houdt ze de betaling tegen tot jij bevestigt."
+      }
+    ],
+    "report": {
+      "title": "Een beveiligingsprobleem gevonden?",
+      "text": "Schrijf naar {securityEmail}."
+    }
+  },
+  "accountants": {
+    "eyebrow": "Voor boekhouders",
+    "title": "Je klant bereidt voor. Jij keurt goed.",
+    "lead": "Use Sybil sorteert, koppelt en vraagt ontbrekende stukken op voor er iets bij jou terechtkomt. Je ontvangt een afgesloten, volledig kwartaal, klaar voor je eigen software.",
+    "packTitle": "Wat je elk kwartaal ontvangt",
+    "pack": [
+      {
+        "title": "Een afgesloten kwartaal",
+        "text": "Je klant sluit het kwartaal af zodra elk bewijsstuk aan zijn betaling gekoppeld is, en stuurt het je dan met één tik."
+      },
+      {
+        "title": "Het register, als CSV",
+        "text": "Eén lijn per bewijsstuk, genummerd zoals de bewijsstukken zelf."
+      },
+      {
+        "title": "Genummerde bewijsstukken",
+        "text": "Elk kasticket en elke factuur als pdf, genummerd volgens de lijn in het register."
+      },
+      {
+        "title": "Originele e-facturen",
+        "text": "Peppol-e-facturen zoals ontvangen of verstuurd, in hun originele UBL-formaat, naast hun pdf."
+      },
+      {
+        "title": "Een btw-overzicht",
+        "text": "De totalen van het kwartaal, met btw en nettobedragen voluit benoemd."
+      }
+    ],
+    "professionalTitle": "Alleen professioneel",
+    "professionalText": "Je klant bewaart zakelijke en privépapieren in één app. Het pakket dat jij krijgt is altijd alleen Professioneel: privédocumenten verlaten nooit de kluis van je klant.",
+    "howTitle": "Hoe elke lijn voorbereid werd",
+    "how": [
+      "Bij elke waarde zie je waar ze vandaan komt: gelezen door Sybil, bevestigd door je klant of nagekeken met de bank.",
+      "Aftrekbaarheid en btw volgen de Belgische regels. Waar Sybil iets niet kon lezen, vraagt ze het aan je klant voor het kwartaal afgesloten wordt.",
+      "Sybil geeft feiten, nooit advies. De boekhouding, de aangiften en de goedkeuring blijven bij jou."
+    ],
+    "deliveryTitle": "Waar het terechtkomt",
+    "deliveryText": "Het pakket gaat naar je documenteninbox, het adres dat je klant één keer instelt in Use Sybil.",
+    "cta": "Zie hoe je klanten het gebruiken"
+  },
+  "legal": {
+    "draftBadge": "Ontwerp",
+    "draftNote": "Ontwerp, juridische tekst volgt.",
+    "privacy": {
+      "title": "Privacybeleid",
+      "intro": "Op deze pagina komt het privacybeleid van Use Sybil. Tot de juridische tekst klaar is, zijn dit de toezeggingen die al op deze site staan:",
+      "points": [
+        "Je documenten en gegevens worden gehost in de EU en zijn versleuteld.",
+        "Je documenten worden nooit gebruikt om AI te trainen.",
+        "Sybil verkoopt nooit gegevens.",
+        "Je ziet elke toegang in het toegangslogboek en kunt documenten vergrendelen die Sybil niet mag lezen.",
+        "Privédocumenten gaan nooit naar je boekhouder."
+      ],
+      "controller": "Verwerkingsverantwoordelijke: {companyName}, {vatNumber}. Contact: {contactEmail}."
+    },
+    "terms": {
+      "title": "Algemene voorwaarden",
+      "intro": "Op deze pagina komen de algemene voorwaarden van Use Sybil. Tot de juridische tekst klaar is, werkt de dienst vandaag zo:",
+      "points": [
+        "Voor de gratis proefperiode is geen kaart nodig en ze loopt tot {trialDocuments} documenten of je eerste rapport.",
+        "Pro kost {pro} en ManCo {manco} per maand, exclusief btw. Elke extra verbonden bankrekening of kaart kost {extra} per maand, alleen zolang ze verbonden is.",
+        "Na de proefperiode kies je een abonnement. Doe je dat niet, dan wordt je account alleen-lezen en blijven je documenten in je kluis.",
+        "Sybil geeft feiten, nooit advies. Je boekhouder blijft verantwoordelijk voor je boekhouding."
+      ],
+      "provider": "Aanbieder: {companyName}, {vatNumber}."
+    }
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "title": "Deze pagina is er niet.",
+    "text": "De link is misschien oud, of het adres is verkeerd getypt. Al de rest staat waar je het liet.",
+    "cta": "Terug naar de homepage"
+  }
+}
