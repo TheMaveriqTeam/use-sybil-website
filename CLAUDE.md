@@ -24,8 +24,10 @@ fonts, taglines, keys, env vars or analytics in this repo.
 
 ## Content rules
 
-- English first. Copy lives in `src/i18n/en.ts`, facts and prices in
-  `src/lib/site.ts`. Never hard-code a price in a page.
+- English first. Copy lives in `src/content/en.json` (edited by Arthur on
+  preview.usesybil.pro, see README), facts and prices in `src/lib/site.ts`
+  and reach the copy as `{tokens}`. Pull before editing copy: the editor
+  commits straight to `main`. Never hard-code a price in a page.
 - Placeholders such as `[Company name]`, `BE [VAT number]`,
   `[contact e-mail]` and `[Pilot customer quote · Name, Company]` stay visibly
   marked until Arthur supplies the real values. Never invent company data,

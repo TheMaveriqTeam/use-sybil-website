@@ -29,7 +29,7 @@ line). Its PNG output is committed, so Vercel builds don't run it.
 
 | What | Where |
 | --- | --- |
-| All visible copy (EN) | `src/i18n/en.ts` |
+| All visible copy (EN) | `src/content/en.json` (loaded and filled in by `src/i18n/en.ts`) |
 | Prices, limits, app URLs, placeholders | `src/lib/site.ts` |
 | Languages (live / planned) | `src/i18n/config.ts`, `astro.config.mjs` (`i18n`) |
 | Design tokens (colours light + dark, type, radii) | `src/styles/global.css` (mirrors `Use-Sybil/src/index.css`) |
@@ -43,6 +43,26 @@ line). Its PNG output is committed, so Vercel builds don't run it.
 
 Prices are written once in `src/lib/site.ts`. The pages, JSON-LD offers and
 `llms.txt` all read from there.
+
+## Editing the text on preview.usesybil.pro
+
+A second Vercel project builds this same repo with `PUBLIC_SYBIL_EDIT=1` and
+serves it at `preview.usesybil.pro` (noindex). There, every text can be
+clicked and edited in place, and **All texts** lists the rest (page titles,
+descriptions, screen-reader labels). **Publish** asks for the editor
+password and calls `api/save.js`, which commits `src/content/en.json` to
+`main`: the live site rebuilds in about a minute.
+
+- `{pro}`, `{manco}`, `{extra}`, `{trialDocuments}` and the other `{tokens}`
+  are filled in from `src/lib/site.ts`; keep them when editing a sentence.
+- Unpublished edits stay in that browser, across pages, until published or
+  discarded.
+- Preview project env: `PUBLIC_SYBIL_EDIT=1`, `EDIT_PASSWORD`, `GITHUB_TOKEN`
+  (fine-grained, this repo only, Contents: read and write). The live
+  project has none of these: its `/api/save` answers 404 and its pages
+  carry no editor.
+- Code: `src/lib/editMode.ts`, `public/sybil-edit.js`, `public/sybil-edit.css`,
+  `api/save.js`.
 
 ## Pages
 

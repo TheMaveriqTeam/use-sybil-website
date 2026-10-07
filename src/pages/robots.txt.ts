@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { EDIT_MODE } from '../lib/editMode';
 
 /**
  * Everyone may crawl everything, including AI and answer-engine crawlers:
@@ -21,6 +22,8 @@ const AI_CRAWLERS = [
 ];
 
 export const GET: APIRoute = ({ site }) => {
+  // The editing copy (preview.usesybil.pro) stays out of every index.
+  if (EDIT_MODE) return new Response('User-agent: *\nDisallow: /\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
   const base = site ?? new URL('https://www.usesybil.pro');
   const body = [
     'User-agent: *',

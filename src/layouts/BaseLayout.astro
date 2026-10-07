@@ -21,6 +21,9 @@ import Footer from '../components/Footer.astro';
 import { useCopy } from '../i18n';
 import { DEFAULT_LOCALE, LIVE_LOCALES, getLocale, localePath, type LocaleCode } from '../i18n/config';
 import { SITE } from '../lib/site';
+import { EDIT_MODE } from '../lib/editMode';
+import rawCopy from '../content/en.json';
+import { TOKENS } from '../i18n/en';
 import { breadcrumbList, graph, organization, serialise, webPage, website } from '../lib/schema';
 
 interface Props {
@@ -78,7 +81,7 @@ const jsonLd = graph([
     <title>{title}</title>
     <meta name="description" content={description} />
     {alternates && <link rel="canonical" href={canonical} />}
-    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="robots" content={EDIT_MODE ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
     {alternates && !noindex && LIVE_LOCALES.map((l) => <link rel="alternate" hreflang={l.tag} href={urlFor(l.code, path)} />)}
     {alternates && !noindex && <link rel="alternate" hreflang="x-default" href={urlFor(DEFAULT_LOCALE, path)} />}
 
@@ -112,6 +115,13 @@ const jsonLd = graph([
     <meta name="twitter:image:alt" content={SITE.ogImageAlt} />
 
     <script is:inline type="application/ld+json" set:html={serialise(jsonLd)} />
+    {EDIT_MODE && (
+      <>
+        <script is:inline type="application/json" id="sybil-copy" set:html={serialise({ copy: rawCopy, tokens: TOKENS })} />
+        <link rel="stylesheet" href="/sybil-edit.css" />
+        <script is:inline src="/sybil-edit.js" defer />
+      </>
+    )}
   </head>
   <body>
     <a href="#main" class="sr-only z-50 rounded-md bg-primary px-4 py-3 text-primary-foreground focus:not-sr-only focus:absolute focus:top-2 focus:left-2">{t.ui.skip}</a>

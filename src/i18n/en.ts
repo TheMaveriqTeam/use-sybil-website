@@ -1,374 +1,89 @@
 /**
- * English copy for usesybil.pro. Every visible sentence lives here, so a
- * translation is one new file of the same shape (see src/i18n/index.ts).
+ * English copy for usesybil.pro. The words live in src/content/en.json, so
+ * they can be edited on the preview site (preview.usesybil.pro) without
+ * touching code; a translation is one more JSON file of the same shape.
+ *
+ * {tokens} in the JSON are facts filled in from src/lib/site.ts, so a price
+ * or a placeholder is still written once: {pro}, {manco}, {extra},
+ * {trialDocuments}, {vaultYears}, {proAccounts}, {mancoAccounts}, {proName},
+ * {mancoName}, {companyName}, {vatNumber}, {contactEmail}, {securityEmail}.
  *
  * Voice (brand book): supportive, clear, structured, not chatty. Specific
  * over vague: dates, euros, counts. No exclamation marks. Sybil gives facts,
  * never advice, and is never called an advisor. Placeholders in [brackets]
  * stay until real values exist.
  */
+import raw from '../content/en.json';
 import { PLACEHOLDER, PLANS, PRICING, euro } from '../lib/site';
+import { EDIT_MODE, markCopy } from '../lib/editMode';
 
-const pro = euro(PLANS.pro.price);
-const manco = euro(PLANS.manco.price);
-const extra = euro(PRICING.extraAccountPrice);
+export const TOKENS: Record<string, string> = {
+  pro: euro(PLANS.pro.price),
+  manco: euro(PLANS.manco.price),
+  extra: euro(PRICING.extraAccountPrice),
+  trialDocuments: String(PRICING.trialDocuments),
+  vaultYears: String(PRICING.vaultYears),
+  proAccounts: String(PLANS.pro.connectedAccounts),
+  mancoAccounts: String(PLANS.manco.connectedAccounts),
+  proName: PLANS.pro.name,
+  mancoName: PLANS.manco.name,
+  companyName: PLACEHOLDER.companyName,
+  vatNumber: PLACEHOLDER.vatNumber,
+  contactEmail: PLACEHOLDER.contactEmail,
+  securityEmail: PLACEHOLDER.securityEmail,
+};
+
+export function fillTokens(text: string, extra: Record<string, string> = {}): string {
+  return text.replace(/\{(\w+)\}/g, (m, k: string) => extra[k] ?? TOKENS[k] ?? m);
+}
+
+type Tone = 'due' | 'attention' | 'stop';
+type Raw = typeof raw;
+
+/** Every string filled in; on the preview site, also marked for the editor. */
+function fill<T>(value: T, path: string): T {
+  if (typeof value === 'string') {
+    const text = fillTokens(value);
+    return (EDIT_MODE ? markCopy(path, text) : text) as T;
+  }
+  if (Array.isArray(value)) return value.map((v, i) => fill(v, `${path}.${i}`)) as T;
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) {
+      // Values the pages use as class names or ids, never shown as text.
+      out[k] = k === 'tone' || k === 'id' ? v : fill(v, path ? `${path}.${k}` : k);
+    }
+    return out as T;
+  }
+  return value;
+}
+
+const filled = fill(raw, '');
+const soon = raw.ui.languageSoon;
 
 export const en = {
-  meta: {
-    home: {
-      title: 'Use Sybil · Pre-accounting for Belgian business owners',
-      description:
-        'Sybil files receipts, bills and contracts, matches them to payments, applies Belgian VAT and deductibility rules and closes the quarter for your accountant.',
-    },
-    security: {
-      title: 'Security and your data · Use Sybil',
-      description:
-        'How Use Sybil keeps your paperwork: hosted in the EU, encrypted, never used to train AI, every access logged, 3 years in the vault and a full yearly export.',
-    },
-    accountants: {
-      title: 'For accountants · What you receive from Use Sybil',
-      description:
-        'Your client prepares, you sign off. Each quarter arrives closed: a register in CSV, numbered proofs, original Peppol e-invoices and a VAT summary.',
-    },
-    privacy: {
-      title: 'Privacy policy (draft) · Use Sybil',
-      description: 'Draft privacy policy for Use Sybil. The legal text will follow.',
-    },
-    terms: {
-      title: 'Terms of use (draft) · Use Sybil',
-      description: 'Draft terms of use for Use Sybil. The legal text will follow.',
-    },
-    notFound: {
-      title: 'Page not found · Use Sybil',
-      description: 'This page does not exist on usesybil.pro.',
-    },
-  },
-
+  ...filled,
   ui: {
-    skip: 'Skip to content',
-    siteNav: 'Site',
-    footerNav: 'Footer',
-    breadcrumb: 'Breadcrumb',
-    home: 'Home',
-    how: 'How it works',
-    security: 'Security',
-    pricing: 'Pricing',
-    faq: 'FAQ',
-    signIn: 'Sign in',
-    tryFree: 'Try it free',
-    language: 'Language',
-    soon: 'soon',
-    languageSoon: (name: string) => `${name}: coming soon`,
-    logoLabel: 'Use Sybil, home',
-    perMonth: '/ month excl. VAT',
+    ...filled.ui,
+    languageSoon: (name: string) => {
+      const text = fillTokens(soon, { name });
+      return EDIT_MODE ? markCopy('ui.languageSoon', text) : text;
+    },
   },
-
-  footer: {
-    line: `Use Sybil · ${PLACEHOLDER.companyName} · ${PLACEHOLDER.vatNumber}`,
-    accountants: 'For accountants',
-    security: 'Security',
-    privacy: 'Privacy',
-    terms: 'Terms',
-    contact: `Contact: ${PLACEHOLDER.contactEmail}`,
-  },
-
   home: {
-    hero: {
-      eyebrow: 'For Belgian business owners · business and personal',
-      line1: 'Got admin?',
-      line2: 'Use Sybil.',
-      lead: 'Hand Sybil your bills, receipts and contracts. She files them, matches them to your payments and tells you only what needs you. Ask her anything in between.',
-      primary: 'Try it free on your own paperwork',
-      secondary: 'How it works',
-      points: ['No card', `${PRICING.trialDocuments} documents free`, 'Hosted in the EU'],
-      portraitAlt: 'Drawing of Sybil, smiling at her desk with a coffee mug and a laptop.',
-      stopLabel: 'Stop',
-      stopText: "Your supplier's bank account changed. Payment on hold.",
-      foundLabel: 'Sybil found',
-      foundText: 'Q3 is complete. 47 proofs, all matched.',
-    },
-
-    whatIs: {
-      title: 'What is Use Sybil?',
-      body: [
-        'Use Sybil is pre-accounting software for Belgian business owners: owners of a management company, freelancers and small companies. Sybil, the assistant inside the app, reads your receipts, bills, e-invoices and contracts, files each one as Professional or Personal, matches it to its bank payment and applies Belgian VAT and deductibility rules.',
-        `Every quarter she hands your accountant a closed quarter: a register, numbered proofs and the original e-invoices. Pro costs ${pro} and ManCo ${manco} per month, excluding VAT. The free trial needs no card.`,
-      ],
-    },
-
+    ...filled.home,
     pains: {
-      eyebrow: 'Sound familiar?',
-      title: 'Admin finds you at the worst moment.',
-      items: [
-        { tone: 'due', mark: '!', text: 'Sunday evening, a shoebox of receipts.' },
-        { tone: 'attention', mark: '!', text: 'My accountant keeps chasing missing proofs.' },
-        { tone: 'due', mark: '?', text: 'Company or private? I never know.' },
-        { tone: 'attention', mark: '!', text: 'I missed the date to cancel. Again.' },
-        { tone: 'stop', mark: '!', text: 'Did that supplier always use this account?' },
-        { tone: 'due', mark: '!', text: 'Retyping IBANs every single month.' },
-      ] as { tone: 'due' | 'attention' | 'stop'; mark: string; text: string }[],
-      resolve: 'Sybil takes all of it off your desk, and tells you only when she needs you.',
+      ...filled.home.pains,
+      items: filled.home.pains.items as (Raw['home']['pains']['items'][number] & { tone: Tone })[],
     },
-
-    how: {
-      eyebrow: 'How it works',
-      title: 'Hand it over. Then close the app.',
-      steps: {
-        you: {
-          label: '1 · You',
-          title: 'Hand over any paperwork',
-          text: 'Drop files, snap receipts or forward e-mails. A whole quarter at once is fine.',
-          demo: '14 documents dropped · Sybil is reading…',
-        },
-        sybil: {
-          label: '2 · Sybil',
-          title: 'She files and matches',
-          text: 'Amount, supplier, deductibility, VAT, Professional or Personal. Each proof paired with its payment.',
-          demoSupplier: 'Café Botanique',
-          demoAmount: euro(86.4, 2),
-          demoTags: ['Professional', '69% deductible', '✓✓ matched'],
-        },
-        together: {
-          label: '3 · Together',
-          title: 'She tells you. You ask.',
-          text: 'Sybil speaks up only when something needs you. And whenever you wonder, just ask.',
-          noticedLabel: 'Sybil noticed',
-          noticed: 'you can cancel your home insurance until 14 Oct.',
-          question: 'What does the company still owe me?',
-          answerAmount: euro(312.4, 2),
-          answer: ', for 4 receipts. Shall I prepare the claim?',
-          chatLabel: 'Example conversation with Sybil',
-        },
-      },
-    },
-
-    outcomes: {
-      eyebrow: 'What changes for you',
-      title: "Four moments you'll tell someone about.",
-      manco: 'ManCo',
-      mancoLabel: 'ManCo plan',
-      items: [
-        { title: 'The IBAN catch', text: '"Stop. This supplier\'s bank account changed." Held before you pay, not after.', manco: false, stop: true },
-        { title: 'Quarter closed', text: '"Q3 is complete. 47 proofs, all matched." One tap and your accountant has it.', manco: false, stop: false },
-        { title: 'Never miss a notice date', text: 'Sybil reads your contracts, plans every payment and warns you while you can still cancel.', manco: true, stop: false },
-        { title: 'Pay in one tap', text: 'Each bill opens in your banking app, filled in. No more retyping.', manco: true, stop: false },
-      ],
-    },
-
-    trust: {
-      eyebrow: 'Trust',
-      title: 'Your paperwork, handled by your personal assistant.',
-      items: [
-        { title: 'Hosted in the EU', text: 'Encrypted, and never used to train AI.' },
-        { title: '3 years in the vault, then yours', text: 'Each completed year comes back to you as a full export.' },
-        { title: 'Facts, never advice', text: 'Paid by you. She never sells data or pushes a product.' },
-        { title: 'Your accountant stays in charge', text: 'They receive a closed quarter: register, numbered proofs, e-invoices.' },
-      ],
-      more: 'How we keep your data',
-    },
-
     pricing: {
-      eyebrow: 'Pricing',
-      title: 'Start free. Choose later.',
-      lead: `No card. Free until ${PRICING.trialDocuments} documents or your first report. You start with a Sybil Scan of last quarter.`,
-      plans: [
-        {
-          id: 'pro',
-          name: PLANS.pro.name,
-          price: pro,
-          audience: 'Freelancers and small companies',
-          features: [
-            'Professional and Personal, by project',
-            `${PLANS.pro.connectedAccounts} bank accounts or cards`,
-            'Belgian deductibility and VAT rules',
-            'Peppol and invoicing',
-            'Ask Sybil, vault, quarter pack',
-          ],
-          cta: 'Try Pro free',
-          featured: false,
-          badge: '',
-        },
-        {
-          id: 'manco',
-          name: PLANS.manco.name,
-          price: manco,
-          audience: 'Everything in Pro, plus your contracts',
-          features: [
-            `${PLANS.manco.connectedAccounts} bank accounts or cards`,
-            'Contract vault, notice dates, cancel reminders',
-            'Payment calendar from your contracts',
-            'Set a contract once, every premium follows',
-            'Pay in one tap',
-          ],
-          cta: 'Try ManCo free',
-          featured: true,
-          badge: 'For management-company owners',
-        },
-      ],
-      extra: `Need more? Each extra bank account or card is ${extra} / month, only while it's connected.`,
-      quotesLabel: 'What customers say (quotes to follow)',
-      quotes: [PLACEHOLDER.customerQuote, PLACEHOLDER.accountantQuote],
+      ...filled.home.pricing,
+      // A quote still in [brackets] is a placeholder and is shown as one.
+      quotes: filled.home.pricing.quotes.map((q, i) => ({
+        ...q,
+        placeholder: /^\[.*\]$/.test(raw.home.pricing.quotes[i].text.trim()),
+      })),
     },
-
-    faq: {
-      eyebrow: 'Questions',
-      title: 'Before you start.',
-      lead: 'Something else? Ask Sybil in the free trial, or write to us.',
-      items: [
-        {
-          q: 'Does this replace my accountant?',
-          a: 'No. Sybil prepares, your accountant signs off. She saves them time by handing over a closed, complete quarter.',
-        },
-        {
-          q: 'Is my data safe?',
-          a: 'Hosted in the EU, encrypted, never used to train AI. You see every access and can lock documents Sybil shouldn\'t read.',
-        },
-        {
-          q: 'How long are my documents kept?',
-          a: `${PRICING.vaultYears} years in the vault. Each completed year comes back to you as a full, indexed export to archive. Your accountant can tell you how long the law asks you to keep them.`,
-        },
-        {
-          q: 'Business and personal in one app?',
-          a: 'Yes. Every document lands in the right world, and personal documents never go to your accountant.',
-        },
-        {
-          q: 'What happens after the trial?',
-          a: 'You pick Pro or ManCo. If you don\'t, your account turns read-only and everything stays in your vault.',
-        },
-        {
-          q: 'How much does Use Sybil cost?',
-          a: `Pro costs ${pro} per month and ManCo ${manco} per month, both excluding VAT. Pro includes ${PLANS.pro.connectedAccounts} connected bank accounts or cards, ManCo includes ${PLANS.manco.connectedAccounts}. Each extra one is ${extra} per month, only while it is connected. The free trial needs no card and runs until ${PRICING.trialDocuments} documents or your first report.`,
-        },
-        {
-          q: 'Who is Use Sybil for?',
-          a: 'Belgian business owners who handle their own paperwork: owners of a management company, freelancers and small companies. Pro fits freelancers and small companies. ManCo adds everything around contracts: notice dates, cancel reminders, a payment calendar and pay in one tap.',
-        },
-        {
-          q: 'Does Use Sybil handle Peppol e-invoices?',
-          a: 'Yes. Both plans include invoicing and Peppol. Sybil keeps the original e-invoice and passes it on to your accountant with the quarter.',
-        },
-        {
-          q: 'Does Sybil tell me what to do?',
-          a: 'No. Sybil gives facts and dates, such as a notice period that opens or a bank account that changed, and you decide. She never recommends a product and never sells your data.',
-        },
-      ],
-    },
-
-    closing: {
-      title1: 'Got admin?',
-      title2: 'Use Sybil.',
-      text: 'Hand over the paperwork. Keep the peace of mind.',
-      cta: 'Try it free on your own paperwork',
-      points: ['No card', `${PRICING.trialDocuments} documents free`, 'Hosted in the EU'],
-    },
-  },
-
-  security: {
-    eyebrow: 'Security',
-    title: 'Your paperwork, kept safe and kept yours.',
-    lead: 'Use Sybil reads your bills, receipts, contracts and bank lines. This page lists how that data is kept, who can see it and how you get it back.',
-    sections: [
-      {
-        title: 'Hosted in the EU',
-        text: 'Your documents and data are stored and processed in the European Union.',
-      },
-      {
-        title: 'Encrypted',
-        text: 'Your data is encrypted on its way to Use Sybil and where it is stored.',
-      },
-      {
-        title: 'Never used to train AI',
-        text: 'Your documents are read to do your admin. They are never used to train AI models.',
-      },
-      {
-        title: 'You see every access',
-        text: 'An access log shows who opened what, and when. You find it in Settings, under Security.',
-      },
-      {
-        title: 'Lock what Sybil should not read',
-        text: 'You can lock a document. A locked document stays in your vault and Sybil does not read it.',
-      },
-      {
-        title: `${PRICING.vaultYears} years in the vault, then yours`,
-        text: `Documents stay in your vault for ${PRICING.vaultYears} years. Each time a year is complete, you receive a full, indexed export, including the original e-invoices, to keep in your own archive. Your accountant can tell you how long the law asks you to keep them.`,
-      },
-      {
-        title: 'Personal stays personal',
-        text: 'Every document is filed as Professional or Personal. Personal documents never go to your accountant.',
-      },
-      {
-        title: 'Paid by you, and only by you',
-        text: 'Use Sybil is paid for by its customers. Sybil never sells data and never pushes a product.',
-      },
-      {
-        title: 'A stop before a wrong payment',
-        text: "When Sybil can't vouch for who you are paying (an unknown supplier, a changed bank account, an account name that doesn't match), she puts the payment on hold until you confirm.",
-      },
-    ],
-    report: {
-      title: 'Found a security issue?',
-      text: `Write to ${PLACEHOLDER.securityEmail}.`,
-    },
-  },
-
-  accountants: {
-    eyebrow: 'For accountants',
-    title: 'Your client prepares. You sign off.',
-    lead: 'Use Sybil does the sorting, matching and chasing before anything reaches you. You receive a closed, complete quarter, ready for your own software.',
-    packTitle: 'What you receive each quarter',
-    pack: [
-      { title: 'A closed quarter', text: 'Your client closes the quarter once every proof is matched to its payment, then sends it to you in one tap.' },
-      { title: 'The register, as CSV', text: 'One line per proof, numbered like the proofs themselves.' },
-      { title: 'Numbered proofs', text: 'Each receipt and bill as a PDF, numbered to match its line in the register.' },
-      { title: 'Original e-invoices', text: 'Peppol e-invoices as received or sent, in their original UBL format, next to their PDF.' },
-      { title: 'A VAT summary', text: 'The quarter totals, with VAT and net amounts labelled in words.' },
-    ],
-    professionalTitle: 'Professional only',
-    professionalText: 'Your client keeps business and personal paperwork in one app. The pack sent to you is always Professional only: personal documents never leave their vault.',
-    howTitle: 'How each line was prepared',
-    how: [
-      'Each value shows where it came from: read by Sybil, confirmed by your client, or verified against the bank.',
-      'Deductibility and VAT follow Belgian rules. Where Sybil could not read something, she asks your client before the quarter closes.',
-      'Sybil gives facts, never advice. The books, the filings and the sign-off stay with you.',
-    ],
-    deliveryTitle: 'Where it arrives',
-    deliveryText: 'The pack is sent to your document inbox, the address your client sets once in Use Sybil.',
-    cta: 'See how your clients use it',
-  },
-
-  legal: {
-    draftBadge: 'Draft',
-    draftNote: 'Draft, legal text to follow.',
-    privacy: {
-      title: 'Privacy policy',
-      intro: 'This page will hold the privacy policy of Use Sybil. Until the legal text is ready, these are the commitments already stated on this site:',
-      points: [
-        'Your documents and data are hosted in the EU and encrypted.',
-        'Your documents are never used to train AI.',
-        'Sybil never sells data.',
-        'You see every access in the access log and can lock documents Sybil should not read.',
-        'Personal documents never go to your accountant.',
-      ],
-      controller: `Data controller: ${PLACEHOLDER.companyName}, ${PLACEHOLDER.vatNumber}. Contact: ${PLACEHOLDER.contactEmail}.`,
-    },
-    terms: {
-      title: 'Terms of use',
-      intro: 'This page will hold the terms of use of Use Sybil. Until the legal text is ready, this is how the service works today:',
-      points: [
-        `The free trial needs no card and runs until ${PRICING.trialDocuments} documents or your first report.`,
-        `Pro costs ${pro} and ManCo ${manco} per month, excluding VAT. Each extra connected bank account or card is ${extra} per month, only while it is connected.`,
-        'After the trial you pick a plan. If you do not, your account turns read-only and your documents stay in your vault.',
-        'Sybil gives facts, never advice. Your accountant stays in charge of your books.',
-      ],
-      provider: `Provider: ${PLACEHOLDER.companyName}, ${PLACEHOLDER.vatNumber}.`,
-    },
-  },
-
-  notFound: {
-    eyebrow: '404',
-    title: 'This page is not here.',
-    text: 'The link may be old, or the address mistyped. Everything else is where you left it.',
-    cta: 'Back to the home page',
   },
 };
 
