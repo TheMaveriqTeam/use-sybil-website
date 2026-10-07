@@ -49,8 +49,9 @@ Prices are written once in `src/lib/site.ts`. The pages, JSON-LD offers and
 A second Vercel project builds this same repo with `PUBLIC_SYBIL_EDIT=1` and
 serves it at `preview.usesybil.pro` (noindex). There, every text can be
 clicked and edited in place, and **All texts** lists the rest (page titles,
-descriptions, screen-reader labels). **Publish** asks for the editor
-password and calls `api/save.js`, which commits `src/content/en.json` to
+descriptions, screen-reader labels). The whole preview sits behind a
+login screen (`middleware.js`, `api/login.js`, a 14-day session cookie).
+**Publish** calls `api/save.js`, which commits `src/content/en.json` to
 `main`: the live site rebuilds in about a minute.
 
 - `{pro}`, `{manco}`, `{extra}`, `{trialDocuments}` and the other `{tokens}`
@@ -62,7 +63,9 @@ password and calls `api/save.js`, which commits `src/content/en.json` to
   project has none of these: its `/api/save` answers 404 and its pages
   carry no editor.
 - Code: `src/lib/editMode.ts`, `public/sybil-edit.js`, `public/sybil-edit.css`,
-  `api/save.js`.
+  `middleware.js`, `api/login.js`, `api/_session.js`, `api/save.js`.
+- Illustrations: cut from the storyboards in `incoming/` into
+  `src/assets/illustrations/` (shown with the `.illo` soft fade).
 
 ## Pages
 

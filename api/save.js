@@ -2,7 +2,8 @@
  * POST /api/save: publishes text edits made on preview.usesybil.pro.
  *
  * Body: { changes: [{ key, from, to }] } where key is a dotted path in
- * src/content/en.json. Header x-edit-password must equal EDIT_PASSWORD.
+ * src/content/en.json. The caller must be signed in (api/login.js sets the
+ * session cookie; middleware.js keeps the whole preview behind it).
  * The function commits the new en.json to GitHub; Vercel then rebuilds the
  * live site (and the preview) from that commit.
  *
@@ -12,7 +13,7 @@
  *   GITHUB_REPO    default TheMaveriqTeam/use-sybil-website
  *   GITHUB_BRANCH  default main
  */
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { validSession } from './_session.js';
 
 const FILE = 'src/content/en.json';
 const MAX_CHANGES = 200;
@@ -24,8 +25,6 @@ const TOKENS = new Set([
 ]);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const digest = (s) => createHash('sha256').update(String(s)).digest();
-const samePassword = (given, expected) => timingSafeEqual(digest(given), digest(expected));
 
 function gh(path, init = {}) {
   const repo = process.env.GITHUB_REPO || 'TheMaveriqTeam/use-sybil-website';
@@ -60,9 +59,9 @@ export default async function handler(req, res) {
   if (!password || !process.env.GITHUB_TOKEN) return res.status(404).json({ error: 'Not found' });
   if (req.method !== 'POST') return res.status(405).json({ error: 'Use POST' });
 
-  if (!samePassword(req.headers['x-edit-password'] || '', password)) {
-    await sleep(1000);
-    return res.status(401).json({ error: 'Wrong password' });
+  if (!validSession(req.headers.cookie, password)) {
+    await sleep(500);
+    return res.status(401).json({ error: 'Signed out' });
   }
 
   const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};

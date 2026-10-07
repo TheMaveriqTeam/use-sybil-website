@@ -16,7 +16,6 @@
   const STRAY = new RegExp(`[${START}${SEP}${END}${DIGITS.join('')}]`, 'g');
   const HAS_STRAY = new RegExp(`[${START}${SEP}${END}]`);
   const STORE = 'sybil-edit-changes';
-  const PW = 'sybil-edit-password';
   const MODE = 'sybil-edit-mode';
 
   const data = JSON.parse(document.getElementById('sybil-copy').textContent);
@@ -222,9 +221,10 @@
   const listBtn = el('button', { type: 'button', class: 'sy-btn sy-ghost', on: { click: () => togglePanel() } }, 'All texts');
   const discardBtn = el('button', { type: 'button', class: 'sy-btn sy-ghost', on: { click: discard } }, 'Discard');
   const publishBtn = el('button', { type: 'button', class: 'sy-btn', on: { click: publish } }, 'Publish');
+  const signOut = el('a', { href: '/api/login?logout=1', class: 'sy-btn sy-ghost sy-link' }, 'Sign out');
   const bar = el('div', { id: 'sy-bar', role: 'region', 'aria-label': 'Website editor' },
     el('span', { class: 'sy-title' }, 'Editing usesybil.pro'), countEl,
-    el('span', { class: 'sy-spacer' }), modeBtn, listBtn, discardBtn, publishBtn);
+    el('span', { class: 'sy-spacer' }), modeBtn, listBtn, discardBtn, publishBtn, signOut);
 
   function updateBar() {
     const n = Object.keys(changes).length;
@@ -339,27 +339,21 @@
   async function publish() {
     const entries = Object.entries(changes);
     if (!entries.length) return;
-    let password = session.get(PW);
-    if (!password) {
-      password = prompt('Editor password');
-      if (!password) return;
-    }
     publishBtn.disabled = true;
     publishBtn.textContent = 'Publishing…';
     try {
       const res = await fetch('/api/save', {
         method: 'POST',
-        headers: { 'content-type': 'application/json', 'x-edit-password': password },
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ changes: entries.map(([key, c]) => ({ key, from: c.from, to: c.to })) }),
       });
       const out = await res.json().catch(() => ({}));
-      if (res.status === 401) { session.set(PW, null); toast('That password is not right. Nothing was published.'); return; }
+      if (res.status === 401) { toast('Your session ended. Sign in again; your changes are kept in this browser.', 10000); setTimeout(() => location.reload(), 2500); return; }
       if (res.status === 409 && out.conflicts) {
         toast(`Someone changed ${out.conflicts.length === 1 ? 'this text' : 'these texts'} in the meantime: ${out.conflicts.map(label).join('; ')}. Reload to see the latest, then edit again.`, 12000);
         return;
       }
       if (!res.ok) { toast(out.error || `Publishing failed (${res.status}). Your changes are kept here.`, 10000); return; }
-      session.set(PW, password);
       // Published: these are now the base texts.
       for (const [key, c] of entries) {
         const parts = key.split('.');

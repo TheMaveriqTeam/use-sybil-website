@@ -527,3 +527,17 @@
     mask-composite: intersect;
   }
 }
+
+/* Spot illustrations (cut from the storyboards in incoming/): the drawings sit
+   on warm paper, so a soft oval fade lets them melt into any card or page. */
+@media all {
+  .illo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 6 / 5;
+    object-fit: cover;
+    -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 58%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 58%, transparent 100%);
+  }
+}

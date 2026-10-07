@@ -77,3 +77,4 @@ body { padding-bottom: 72px; }
   #sy-bar .sy-count { flex-basis: 100%; }
   .sy-btn { padding: 0 10px; flex: 1; }
 }
+.sy-link { display: inline-flex; align-items: center; text-decoration: none; }

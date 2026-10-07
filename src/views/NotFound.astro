@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import emptyOffice from '../assets/illustrations/empty-office.png';
 import { useCopy } from '../i18n';
 import { localePath, type LocaleCode } from '../i18n/config';
 
@@ -13,6 +15,7 @@ const n = t.notFound;
 <BaseLayout lang={lang} title={t.meta.notFound.title} description={t.meta.notFound.description} path="/404" noindex alternates={false}>
   <section class="py-20 md:py-28">
     <div class="wrap max-w-[720px] text-center">
+      <Picture src={emptyOffice} alt="" class="illo mx-auto mb-6 max-w-[300px]" widths={[300, 360]} sizes="300px" formats={['avif', 'webp']} />
       <p class="eyebrow m-0">{n.eyebrow}</p>
       <h1 class="mt-3 mb-0 font-serif text-[clamp(40px,5.4vw,64px)] leading-[1.02] font-normal">{n.title}</h1>
       <p class="lead mx-auto mt-5 mb-8 max-w-[520px]">{n.text}</p>

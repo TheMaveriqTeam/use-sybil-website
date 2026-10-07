@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import accountantPack from '../assets/illustrations/accountant-pack.png';
 import PageIntro from '../components/PageIntro.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { useCopy } from '../i18n';
@@ -23,7 +25,10 @@ const a = t.accountants;
 
   <section class="py-14 md:py-20" aria-labelledby="pack-title">
     <div class="wrap">
-      <h2 id="pack-title" class="h2 !mt-0 mb-8">{a.packTitle}</h2>
+      <div class="mb-8 flex flex-col-reverse items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <h2 id="pack-title" class="h2 !m-0">{a.packTitle}</h2>
+        <Picture src={accountantPack} alt="" class="illo w-[220px] shrink-0 sm:w-[260px]" widths={[260, 360]} sizes="260px" formats={['avif', 'webp']} />
+      </div>
       <ol class="m-0 grid list-none grid-cols-1 gap-5 p-0 md:grid-cols-2 lg:grid-cols-3">
         {a.pack.map((item, i) => (
           <li class="card flex flex-col gap-2">

@@ -7,6 +7,13 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CtaBand from '../components/CtaBand.astro';
 import portrait from '../assets/brand/sybil-portrait.jpg';
+import handOver from '../assets/illustrations/hand-over.png';
+import filesAndMatches from '../assets/illustrations/files-and-matches.png';
+import tellsYou from '../assets/illustrations/tells-you.png';
+import ibanCatch from '../assets/illustrations/iban-catch.png';
+import quarterClosed from '../assets/illustrations/quarter-closed.png';
+import noticeDate from '../assets/illustrations/notice-date.png';
+import payInOneTap from '../assets/illustrations/pay-in-one-tap.png';
 import { useCopy } from '../i18n';
 import { getLocale, localePath, type LocaleCode } from '../i18n/config';
 import { SITE } from '../lib/site';
@@ -31,6 +38,9 @@ const schema = [
   faqPage(canonical, h.faq.items),
 ];
 const steps = h.how.steps;
+// One drawing per outcome card, in the order of h.outcomes.items.
+const outcomeArt = [ibanCatch, quarterClosed, noticeDate, payInOneTap];
+const illo: { widths: number[]; sizes: string; formats: ('avif' | 'webp')[] } = { widths: [240, 360], sizes: '(min-width: 1024px) 300px, 90vw', formats: ['avif', 'webp'] };
 ---
 <BaseLayout lang={lang} title={t.meta.home.title} description={t.meta.home.description} path="/" schema={schema}>
   <!-- 1 · Promise -->
@@ -114,6 +124,7 @@ const steps = h.how.steps;
       </div>
       <ol class="m-0 grid list-none grid-cols-1 gap-5 p-0 lg:grid-cols-3">
         <li class="card flex flex-col gap-3">
+          <Picture src={handOver} alt="" class="illo -mx-1 mb-1 max-w-[300px] self-center" {...illo} />
           <span class="step-label">{steps.you.label}</span>
           <h3 class="card-title">{steps.you.title}</h3>
           <p class="card-text">{steps.you.text}</p>
@@ -122,6 +133,7 @@ const steps = h.how.steps;
           </div>
         </li>
         <li class="card flex flex-col gap-3">
+          <Picture src={filesAndMatches} alt="" class="illo -mx-1 mb-1 max-w-[300px] self-center" {...illo} />
           <span class="step-label">{steps.sybil.label}</span>
           <h3 class="card-title">{steps.sybil.title}</h3>
           <p class="card-text">{steps.sybil.text}</p>
@@ -137,6 +149,7 @@ const steps = h.how.steps;
           </div>
         </li>
         <li class="card flex flex-col gap-3 !border-2 !border-primary">
+          <Picture src={tellsYou} alt="" class="illo -mx-1 mb-1 max-w-[300px] self-center" {...illo} />
           <span class="step-label">{steps.together.label}</span>
           <h3 class="card-title">{steps.together.title}</h3>
           <p class="card-text">{steps.together.text}</p>
@@ -158,8 +171,9 @@ const steps = h.how.steps;
         <h2 id="outcomes-title" class="h2">{h.outcomes.title}</h2>
       </div>
       <ul class="m-0 grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4">
-        {h.outcomes.items.map((o) => (
-          <li class:list={['card', o.stop && '!border-stop-border']}>
+        {h.outcomes.items.map((o, i) => (
+          <li class:list={['card flex flex-col gap-2', o.stop && '!border-stop-border']}>
+            <Picture src={outcomeArt[i]} alt="" class="illo mb-1 max-w-[260px] self-center" {...illo} />
             <h3 class="card-title">
               {o.title}
               {o.manco && <span class="tag"><span aria-hidden="true">{h.outcomes.manco}</span><span class="sr-only">({h.outcomes.mancoLabel})</span></span>}
